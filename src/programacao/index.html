@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/assets/img/IV.ico">
-    <title>IV Congresso de Tecnológia da Informação - IFSul</title>
+    <title>IV Congresso de Tecnologia da Informação - IFSul</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -24,25 +24,25 @@
                 document.getElementById('header-placeholder').innerHTML = data;
                 ajustarNavbar();
             });
-    
+
         function ajustarNavbar() {
             let path = window.location.pathname;
             let isHome = path.includes("/home/index.html") || path.endsWith("/home/");
-    
+
             let navLinks = document.querySelector(".navbar-nav");
-    
+
             if (!isHome) {
                 let homeLink = navLinks.querySelector("a[href='#home']");
                 if (homeLink) homeLink.setAttribute("href", "/src/home/index.html");
-    
+
                 let contatoLink = navLinks.querySelector("a[href='#contato']");
                 if (contatoLink) contatoLink.closest("li").remove();
-    
+
                 let arenaLink = navLinks.querySelector("a[href='#arena']");
                 if (arenaLink) arenaLink.setAttribute("href", "../arenagame/index.html");
             }
         }
-    </script>    
+    </script>
     <main>
         <section id="home" class="main gradient-bg">
             <svg xmlns="http://www.w3.org/2000/svg">
@@ -67,7 +67,7 @@
                 <div class="main-content">
                     <h1>Programação do Evento</h1>
                     <p>Confira as primeiras palestras que acontecerão no IV Congresso
-                        de Tecnológia da Informação.</p>
+                        de Tecnologia da Informação.</p>
                 </div>
             </div>
         </section>
@@ -78,14 +78,12 @@
                     <h2 class="month-title"><b>Esquenta</b> Congresso</h2>
                     <h3>Maio 2025</h3>
                     <div class="days-list">
-                        <button class="day-button active">28</button>
+                        <button class="day-button">28</button>
                         <button class="day-button">31</button>
                     </div>
                 </div>
 
-                <div class="events-list">
-                </div>
-            </div>
+                <div class="events-list"></div>
         </section>
 
         <div id="footer-placeholder"></div>
