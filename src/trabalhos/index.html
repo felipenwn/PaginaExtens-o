@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/img/IV.ico">
+    <title>IV Congresso de Tecnológia da Informação - IFSul</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/common/header.css">
+    <link rel="stylesheet" href="../../assets/css/works/works.css">
+    <link rel="stylesheet" href="../../assets/css/common/footer.css">
+</head>
+
+<body>
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('../header/index.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                ajustarNavbar();
+            });
+    
+        function ajustarNavbar() {
+            let path = window.location.pathname;
+            let isHome = path.includes("/home/index.html") || path.endsWith("/home/");
+    
+            let navLinks = document.querySelector(".navbar-nav");
+    
+            if (!isHome) {
+                let homeLink = navLinks.querySelector("a[href='#home']");
+                if (homeLink) homeLink.setAttribute("href", "/src/home/index.html");
+    
+                let contatoLink = navLinks.querySelector("a[href='#contato']");
+                if (contatoLink) contatoLink.closest("li").remove();
+    
+                let arenaLink = navLinks.querySelector("a[href='#arena']");
+                if (arenaLink) arenaLink.setAttribute("href", "../arenagame/index.html");
+            }
+        }
+    </script>    
+    <main>
+        <section id="home" class="main gradient-bg">
+            <svg xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="goo">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
+                            result="goo" />
+                        <feBlend in="SourceGraphic" in2="goo" />
+                    </filter>
+                </defs>
+            </svg>
+            <div class="gradients-container">
+                <div class="g1"></div>
+                <div class="g2"></div>
+                <div class="g3"></div>
+                <div class="g4"></div>
+                <div class="g5"></div>
+                <div class="interactive"></div>
+            </div>
+            <div class="container">
+                <div class="main-content">
+                    <h1>Chamada de Trabalhos</h1>
+                    <p>Submeta seu artigo para o IV Congresso de Tecnologia da Informação do IFSul.
+                        Participe desse espaço de inovação e debate, compartilhe suas pesquisas e concorra a prêmios.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="construction-section py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 text-center">
+                        <div class="construction-card p-5 bg-light rounded shadow-sm">
+                            <i class="bi bi-cone-striped text-warning" style="font-size: 5rem;"></i>
+                            <h2 class="mt-4 mb-3">Página em Construção</h2>
+                            <p class="lead mb-4">Estamos trabalhando para melhorar esta seção do site. Em breve teremos novidades!</p>
+                            <div class="d-flex justify-content-center gap-3">
+                                <i class="bi bi-hammer text-primary" style="font-size: 2rem;"></i>
+                                <i class="bi bi-gear-wide-connected text-secondary" style="font-size: 2rem;"></i>
+                                <i class="bi bi-tools text-dark" style="font-size: 2rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- <section class="about-section">
+            <div class="container">
+                <span class="section-subtitle">Sobre o Evento</span>
+                <h2 class="section-title">Chamada de Trabalhos</h2>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="event-card">
+                            <p>O III Congresso de Tecnologia da Informação do IFSUL - Passo Fundo busca proporcionar um
+                                espaço de divulgação e discussão de temas relevantes e atuais na área de informática.
+                                Assim, convidamos para submissão de artigos científicos, vinculados a pesquisas ou
+                                experiências, relacionadas a trabalhos de iniciação científica, graduação, pós-graduação
+                                e mercado de trabalho. A submissão da versão final deverá ser realizada pelo JEMS.</p>
+                            <p class="mt-3">As apresentações dos artigos selecionados poderão ser realizadas
+                                presencialmente ou online pela plataforma disponibilizada pelo evento. O tempo é de 15
+                                minutos. Após a apresentação, serão destinados 5 minutos para perguntas.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-4 mt-lg-0">
+                        <div class="event-card">
+                            <div class="event-time">
+                                <i class="bi bi-calendar-event"></i>
+                                <span>Data limite para submissão do artigo: 16/04/2023</span>
+                                <span>Comunicação dos artigos aceitos: 15/05/2023</span>
+                                <span>Envio da versão final do artigo: 24/05/2023</span>
+                            </div>
+                            <div class="event-location">
+                                <i class="bi bi-geo-alt"></i>
+                                <span>Local: Miniauditório</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="schedule" class="schedule-section">
+            <div class="container">
+                <span class="section-subtitle">Programação</span>
+                <h2 class="section-title">Agenda do evento</h2>
+
+                <div class="schedule-day">
+                    <h3 class="day-title">Quinta (01/06/2023)</h3>
+
+                    <div class="schedule-period">
+                        <h4 class="period-title">1ª Sessão Técnica</h4>
+
+                        <div class="schedule-item">
+                            <div class="schedule-time">13:30 às 13:55</div>
+                            <h5>Arquitetura baseada em microsserviços para a autenticação de multiaplicações</h5>
+                            <div class="location-details">
+                                <div class="event-location">
+                                    <i class="bi bi-person"></i>
+                                    <span>Autores: Willian Schuck, Jorge Luis Boeira Bavaresco e Roberto Wiest</span>
+                                </div>
+                            </div>
+                            <div class="schedule-time">13:55 às 14:20</div>
+                            <h5>Uma Revisão Sistemática sobre Abordagens para Modelagem de Aluno em Sistemas de
+                                Aprendizagem Adaptativos</h5>
+                            <div class="location-details">
+                                <div class="event-location">
+                                    <i class="bi bi-person"></i>
+                                    <span>Autores: Telmo De Cesaro Júnior, Vinicius Beck, André Rollwagen, Rodrigo de
+                                        Oliveira e Jorge Luis Boeira Bavaresco</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="schedule-day">
+                    <h3 class="day-title">Sexta (02/06/2023)</h3>
+
+                    <div class="schedule-period">
+                        <h4 class="period-title">2ª Sessão Técnica</h4>
+
+                        <div class="schedule-item">
+                            <div class="schedule-time">13:30 às 13:55</div>
+                            <h5>Uso de Spyware Integrado com Modelos de Predição para Monitoramento em Computadores</h5>
+                            <div class="location-details">
+                                <div class="event-location">
+                                    <i class="bi bi-person"></i>
+                                    <span>Autores: Darlan Noetzold e Anubis Rossetto</span>
+                                </div>
+                            </div>
+                            <div class="schedule-time">13:55 às 14:20</div>
+                            <h5>Algoritmos genéticos aplicados à predição da Lotofácil: um enfoque na otimização de
+                                apostas</h5>
+                            <div class="location-details">
+                                <div class="event-location">
+                                    <i class="bi bi-person"></i>
+                                    <span>Autores: Camila Florao Barcellos, Bernardo Tomasi e João Mário Brezolin</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <section class="winners-section">
+            <div class="container">
+                <span class="section-subtitle">Premiação</span>
+                <h2 class="section-title">Prêmios</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="winner-card first-place">
+                            <div class="trophy-icon">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+                            <div class="winner-position">1º Lugar</div>
+                            <div class="winner-prize">2 (duas) licenças na Alura com validade de 2 (dois) meses para
+                                cada artigo.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4 mb-md-0">
+                        <div class="winner-card second-place">
+                            <div class="trophy-icon">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+                            <div class="winner-position">2º Lugar</div>
+                            <div class="winner-prize">2 (duas) licenças na Alura com validade de 2 (dois) meses para
+                                cada artigo.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4 mb-md-0">
+                        <div class="winner-card third-place">
+                            <div class="trophy-icon">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+                            <div class="winner-position">3º Lugar</div>
+                            <div class="winner-prize">2 (duas) licenças na Alura com validade de 2 (dois) meses para
+                                cada artigo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="time" class="py-5 bg-light">
+            <div class="container">
+                <span class="section-subtitle">Organização</span>
+                <h2 class="section-title">Comissão de trabalhos</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="event-card text-center">
+                            <img src="../../assets/img/speakers/Anubis.jpg" alt="Anubis" class="speaker-image mb-3">
+                            <h4 class="event-title mb-2">Anubis Graciella de Moraes Rossetto</h4>
+                            <p class="email-text mb-2">anubisrossetto@ifsul.edu.br</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="event-card text-center">
+                            <img src="../../assets/img/speakers/Roberto.jpg" alt="Roberto" class="speaker-image mb-3">
+                            <h4 class="event-title mb-2">Roberto Wiest</h4>
+                            <p class="email-text mb-2">robertowiest@ifsul.edu.br</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <div id="footer-placeholder"></div>
+        <script>
+            fetch('../footer/index.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                });
+        </script>
+
+    </main>
+    <script src="../interactive-bubble.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

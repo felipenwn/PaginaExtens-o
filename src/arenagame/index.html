@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/img/IV.ico">
+    <title>IV Congresso de Tecnológia da Informação - IFSul</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/common/header.css">
+    <link rel="stylesheet" href="../../assets/css/arenagame/arenagame.css">
+    <link rel="stylesheet" href="../../assets/css/common/footer.css">
+</head>
+
+<body>
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('../header/index.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                ajustarNavbar();
+            });
+    
+        function ajustarNavbar() {
+            let path = window.location.pathname;
+            let isHome = path.includes("/home/index.html") || path.endsWith("/home/");
+    
+            let navLinks = document.querySelector(".navbar-nav");
+    
+            if (!isHome) {
+                let homeLink = navLinks.querySelector("a[href='#home']");
+                if (homeLink) homeLink.setAttribute("href", "/src/home/index.html");
+    
+                let contatoLink = navLinks.querySelector("a[href='#contato']");
+                if (contatoLink) contatoLink.closest("li").remove();
+    
+                let arenaLink = navLinks.querySelector("a[href='#arena']");
+                if (arenaLink) arenaLink.setAttribute("href", "../arenagame/index.html");
+            }
+        }
+    </script>    
+    <main>
+        <section id="home" class="main gradient-bg">
+            <svg xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="goo">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
+                            result="goo" />
+                        <feBlend in="SourceGraphic" in2="goo" />
+                    </filter>
+                </defs>
+            </svg>
+            <div class="gradients-container">
+                <div class="g1"></div>
+                <div class="g2"></div>
+                <div class="g3"></div>
+                <div class="g4"></div>
+                <div class="g5"></div>
+                <div class="interactive"></div>
+            </div>
+            <div class="container">
+                <div class="main-content">
+                    <h1>2º Arena Game - IFSul </h1>
+                    <p>Confira as atividades da 2ª Arena Game - IFSul.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="py-5">
+            <div class="container">
+                <h2 class="section-title">2º IFSul Arena Game</h2>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <p class="mb-4">Neste ano, o IFSul - Campus Passo Fundo está organizando a segunda edição da
+                            Arena Game, que
+                            contará com diversos jogos. Para participar, basta se inscrever na aba de eventos no site do
+                            painel do IFSul.</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="event-card">
+                            <div class="event-info">
+                                <div class="event-time mb-3">
+                                    <i class="bi bi-calendar-event"></i>
+                                    <span>Data da Arena Game: a definir</span>
+                                </div>
+                                <!-- <div class="event-time">
+                                    <i class="bi bi-pencil-square"></i>
+                                    <span>Inscrições: <a href="https://painel.passofundo.ifsul.edu.br/eventos"
+                                            target="_blank" class="event-link">Clique aqui</a></span>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="topicos" class="game-modes">
+            <div class="container">
+                <h2 class="section-title">Modalidades</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="game-mode-card">
+                            <i class="bi bi-controller"></i>
+                            <h3 class="game-title">Campeonato de Counter-Strike</h3>
+                            <p class="game-description">
+                                Inscreva a sua equipe e venha participar do Campeonato de Counter-Strike.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="game-mode-card">
+                            <i class="bi bi-trophy"></i>
+                            <h3 class="game-title">Jogos Livres</h3>
+                            <p class="game-description">
+                                Inscreva-se nessa atividade para jogar League of Legends e Valorant em partidas casuais.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="game-mode-card">
+                            <i class="bi bi-dice-6"></i>
+                            <h3 class="game-title">RPG de Mesa</h3>
+                            <p class="game-description">
+                                Venha jogar aventuras de RPG de Mesa.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- <section id="time" class="py-5 bg-light">
+            <div class="container">
+                <span class="section-subtitle">Organização</span>
+                <h2 class="section-title">Responsáveis</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="event-card text-center">
+                            <img src="../../assets/img/speakers/Elder.jpg" alt="Elder" class="speaker-image mb-3">
+                            <h4 class="event-title mb-2">Elder Francisco Fontana Bernardi</h4>
+                            <p class="email-text mb-2">elderbernardi@ifsul.edu.br</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <div id="footer-placeholder"></div>
+        <script>
+            fetch('../footer/index.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                });
+        </script>
+
+    </main>
+    <script src="../interactive-bubble.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

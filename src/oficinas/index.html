@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/img/IV.ico">
+    <title>IV Congresso de Tecnológia da Informação - IFSul</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/common/header.css">
+    <link rel="stylesheet" href="../../assets/css/workshops/workshops.css">
+    <link rel="stylesheet" href="../../assets/css/common/footer.css">
+</head>
+
+<body>
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('../header/index.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                ajustarNavbar();
+            });
+    
+        function ajustarNavbar() {
+            let path = window.location.pathname;
+            let isHome = path.includes("/home/index.html") || path.endsWith("/home/");
+    
+            let navLinks = document.querySelector(".navbar-nav");
+    
+            if (!isHome) {
+                let homeLink = navLinks.querySelector("a[href='#home']");
+                if (homeLink) homeLink.setAttribute("href", "/src/home/index.html");
+    
+                let contatoLink = navLinks.querySelector("a[href='#contato']");
+                if (contatoLink) contatoLink.closest("li").remove();
+    
+                let arenaLink = navLinks.querySelector("a[href='#arena']");
+                if (arenaLink) arenaLink.setAttribute("href", "../arenagame/index.html");
+            }
+        }
+    </script>    
+    <main>
+        <section id="home" class="main gradient-bg">
+            <svg xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="goo">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
+                            result="goo" />
+                        <feBlend in="SourceGraphic" in2="goo" />
+                    </filter>
+                </defs>
+            </svg>
+            <div class="gradients-container">
+                <div class="g1"></div>
+                <div class="g2"></div>
+                <div class="g3"></div>
+                <div class="g4"></div>
+                <div class="g5"></div>
+                <div class="interactive"></div>
+            </div>
+            <div class="container">
+                <div class="main-content">
+                    <h1>Chamada de oficinas</h1>
+                    <p>Compartilhe seu conhecimento no IV Congresso de Tecnologia da Informação.
+                        Submeta sua oficina e contribua para a capacitação de profissionais e estudantes da área.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="construction-section py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 text-center">
+                        <div class="construction-card p-5 bg-light rounded shadow-sm">
+                            <i class="bi bi-cone-striped text-warning" style="font-size: 5rem;"></i>
+                            <h2 class="mt-4 mb-3">Página em Construção</h2>
+                            <p class="lead mb-4">Estamos trabalhando para melhorar esta seção do site. Em breve teremos novidades!</p>
+                            <div class="d-flex justify-content-center gap-3">
+                                <i class="bi bi-hammer text-primary" style="font-size: 2rem;"></i>
+                                <i class="bi bi-gear-wide-connected text-secondary" style="font-size: 2rem;"></i>
+                                <i class="bi bi-tools text-dark" style="font-size: 2rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- <section class="about-section">
+            <div class="container">
+                <span class="section-subtitle">Sobre o Evento</span>
+                <h2 class="section-title">Chamada de Oficinas</h2>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="event-card">
+                            <p>O III Congresso de Tecnologia da Informação do IFSUL - Passo Fundo proporcionará um
+                                espaço para oficinas sobre temas relevantes e atuais na área de informática. Assim,
+                                convidamos para submissão de oficinas, vinculados a pesquisas ou experiências,
+                                relacionadas a tecnologias aplicadas à academia ou mercado de trabalho.</p>
+                            <p class="mt-3">As oficinas ocorrerão nas manhãs, tardes e noites do evento, tendo duração
+                                de 3 horas. Serão disponibilizados laboratórios com 16 máquinas para até 24 pessoas.</p>
+                            <p class="mt-3">As oficinas poderão ser ministradas em dois formatos, devendo o ministrante
+                                indicar sua escolha no momento da submissão. O primeiro é em formato tradicional, estilo
+                                aula prática, onde os participantes desenvolvem nos computadores o conteúdo ministrado.
+                                O segundo é um formato estilo “meetup”, onde o ministrante apresenta uma tecnologia, sem
+                                a necessidade dos participantes utilizarem computadores.</p>
+                            <p class="mt-3">A inscrição não tem custo e passará por uma seleção de acordo com a
+                                disponibilidade de horário e interesse do evento. O ministrante terá direito a
+                                certificado de apresentação.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-4 mt-lg-0">
+                        <div class="event-card">
+                            <div class="event-time">
+                                <i class="bi bi-calendar-event"></i>
+                                <span>Período para submissão da oficina: 06/03/2023 a 02/05/2023</span>
+                                <span>Comunicação das oficinas aceitas: 17/05/2023</span>
+                            </div>
+                            <div class="event-location">
+                                <i class="bi bi-pencil-square"></i>
+                                <span>Oficinas selecionadas: <a href="../programacao/index.html"
+                                        class="event-link">Clique aqui</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="time" class="py-5 bg-light">
+            <div class="container">
+                <span class="section-subtitle">Organização</span>
+                <h2 class="section-title">Comissão de palestras e minicursos</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="event-card text-center">
+                            <img src="../../assets/img/speakers/Jorge.jpg" alt="Jorge" class="speaker-image mb-3">
+                            <h4 class="event-title mb-2">Jorge Luis Boeira Bavaresco</h4>
+                            <p class="email-text mb-2">jorgebavaresco@ifsul.edu.br</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <div id="footer-placeholder"></div>
+        <script>
+            fetch('../footer/index.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                });
+        </script>
+
+    </main>
+    <script src="../interactive-bubble.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

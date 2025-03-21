@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/img/IV.ico">
+    <title>IV Congresso de Tecnológia da Informação - IFSul</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/common/header.css">
+    <link rel="stylesheet" href="../../assets/css/about/about.css">
+    <link rel="stylesheet" href="../../assets/css/common/footer.css">
+</head>
+
+<body>
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('../header/index.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                ajustarNavbar();
+            });
+    
+        function ajustarNavbar() {
+            let path = window.location.pathname;
+            let isHome = path.includes("/home/index.html") || path.endsWith("/home/");
+    
+            let navLinks = document.querySelector(".navbar-nav");
+    
+            if (!isHome) {
+                let homeLink = navLinks.querySelector("a[href='#home']");
+                if (homeLink) homeLink.setAttribute("href", "/src/home/index.html");
+    
+                let contatoLink = navLinks.querySelector("a[href='#contato']");
+                if (contatoLink) contatoLink.closest("li").remove();
+    
+                let arenaLink = navLinks.querySelector("a[href='#arena']");
+                if (arenaLink) arenaLink.setAttribute("href", "../arenagame/index.html");
+            }
+        }
+    </script>    
+    <main>
+        <section id="home" class="main gradient-bg">
+            <svg xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="goo">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
+                            result="goo" />
+                        <feBlend in="SourceGraphic" in2="goo" />
+                    </filter>
+                </defs>
+            </svg>
+            <div class="gradients-container">
+                <div class="g1"></div>
+                <div class="g2"></div>
+                <div class="g3"></div>
+                <div class="g4"></div>
+                <div class="g5"></div>
+                <div class="interactive"></div>
+            </div>
+            <div class="container">
+                <div class="main-content">
+                    <h1>Sobre o Evento</h1>
+                    <p>Confira informações sobre a IV Congresso de Tecnológia da Informação.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="py-5">
+            <div class="container">
+                <span class="section-subtitle">Sobre</span>
+                <h2 class="section-title">IV Congresso de Tecnologia da Informação</h2>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <p class="mb-4">O IV Congresso de Tecnologia da Informação do IFSul Passo Fundo será realizado
+                            no período de 26 a 28 de Maio de 2025.
+                            O objetivo principal é a disseminação do conhecimento com a apresentação de trabalhos
+                            científicos, oferta de oficinas, palestras, maratona,
+                            jogos, bem como a promoção de um espaço de interação entre a academia e empresas locais.</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="event-card">
+                            <div class="event-info">
+                                <div class="event-time mb-3">
+                                    <i class="bi bi-calendar-event"></i>
+                                    <span>Data do Evento: 26 - 28 Maio, 2025</span>
+                                </div>
+                                <div class="event-location">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <span>Local: Campus Passo Fundo - IFSul</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="topicos" class="py-5 bg-light">
+            <div class="container">
+                <span class="section-subtitle">Tópicos de Interesse</span>
+                <h2 class="section-title">Áreas Abordadas</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="event-card h-100">
+                            <i class="bi bi-cpu fs-2 text-primary mb-3"></i>
+                            <h3 class="event-title">Computação e Sistemas</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">Computação aplicada</li>
+                                <li class="mb-2">Sistemas distribuídos</li>
+                                <li class="mb-2">Sistemas operacionais</li>
+                                <li class="mb-2">Arquitetura de computadores</li>
+                                <li class="mb-2">Sistemas embarcados e automação</li>
+                                <li class="mb-2">Sistemas de Informação</li>
+                                <li class="mb-2">Segurança em Sistemas Computacionais</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="event-card h-100">
+                            <i class="bi bi-code-slash fs-2 text-primary mb-3"></i>
+                            <h3 class="event-title">Desenvolvimento e Dados</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">Engenharia de software</li>
+                                <li class="mb-2">Banco de dados</li>
+                                <li class="mb-2">Big Data</li>
+                                <li class="mb-2">Computação móvel, ubíqua e pervasiva</li>
+                                <li class="mb-2">Internet das Coisas</li>
+                                <li class="mb-2">Modelagem e simulação computacional</li>
+                                <li class="mb-2">Redes de computadores</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="event-card h-100">
+                            <i class="bi bi-gpu-card fs-2 text-primary mb-3"></i>
+                            <h3 class="event-title">Tecnologias Emergentes</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">Inteligência Artificial</li>
+                                <li class="mb-2">Visão computacional</li>
+                                <li class="mb-2">Computação Gráfica</li>
+                                <li class="mb-2">Jogos Digitais</li>
+                                <li class="mb-2">Informática na educação</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="historico" class="py-5">
+            <div class="container">
+                <span class="section-subtitle">Histórico</span>
+                <h2 class="section-title">Nossa Trajetória</h2>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="timeline">
+                            <div class="event-card mb-4">
+                                <h3 class="event-title">Congresso de Tecnologia da Informação (2018-2019)</h3>
+                                <p>Em 2018 e 2019 foram realizadas as duas primeiras edições do Congresso de Tecnologia
+                                    da Informação IFSul Campus Passo Fundo, com o tema "Computação Aplicada". Essas
+                                    edições contaram com uma média consistente de participantes, 22 artigos científicos
+                                    selecionados para apresentação em 2018 e 16 artigos em 2019, além de diversas
+                                    palestras e oficinas, promovendo a integração com outras instituições de ensino,
+                                    associações, empresas e a Prefeitura Municipal de Passo Fundo.</p>
+                            </div>
+                            <div class="event-card">
+                                <h3 class="event-title">Simpósio de Informática (2014-2016)</h3>
+                                <p>Nos anos de 2014, 2015 e 2016 foram realizadas as edições do Simpósio de Informática,
+                                    abordando temas como "A Internet das Coisas", "Big Data" e "Mobile". Cada edição
+                                    contou com aproximadamente 300 participantes e recebeu trabalhos científicos de
+                                    diversos estados do Brasil. O evento contou com conferencistas de empresas
+                                    internacionalmente reconhecidas como IBM e BI do Brasil, além de representantes de
+                                    universidades como PUCRS, UFPE e UFRGS.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="time" class="py-5 bg-light">
+            <div class="container">
+                <span class="section-subtitle">Time</span>
+                <h2 class="section-title">Organizadores</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="event-card text-center">
+                            <img src="../../assets/img/speakers/Joao.png" alt="Coordenador" class="speaker-image mb-3">
+                            <h4 class="event-title mb-2">João Mário Lopes Brezolin</h4>
+                            <p class="mb-2">Coordenação geral</p>
+                            <p class="email-text mb-2">joaobrezolin@ifsul.edu.br</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="event-card text-center">
+                            <img src="../../assets/img/speakers/Alex.png" alt="Suporte" class="speaker-image mb-3">
+                            <h4 class="event-title mb-2">Alex Sebben da Cunha</h4>
+                            <p class="mb-2">Suporte Técnico</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="footer-placeholder"></div>
+        <script>
+            fetch('../footer/index.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                });
+        </script>
+
+    </main>
+    <script src="../interactive-bubble.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/img/IV.ico">
+    <title>IV Congresso de Tecnológia da Informação - IFSul</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/common/header.css">
+    <link rel="stylesheet" href="../../assets/css/training/training.css">
+    <link rel="stylesheet" href="../../assets/css/common/footer.css">
+</head>
+
+<body>
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('../header/index.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                ajustarNavbar();
+            });
+    
+        function ajustarNavbar() {
+            let path = window.location.pathname;
+            let isHome = path.includes("/home/index.html") || path.endsWith("/home/");
+    
+            let navLinks = document.querySelector(".navbar-nav");
+    
+            if (!isHome) {
+                let homeLink = navLinks.querySelector("a[href='#home']");
+                if (homeLink) homeLink.setAttribute("href", "/src/home/index.html");
+    
+                let contatoLink = navLinks.querySelector("a[href='#contato']");
+                if (contatoLink) contatoLink.closest("li").remove();
+    
+                let arenaLink = navLinks.querySelector("a[href='#arena']");
+                if (arenaLink) arenaLink.setAttribute("href", "../arenagame/index.html");
+            }
+        }
+    </script>    
+    <main>
+        <section id="home" class="main gradient-bg">
+            <svg xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="goo">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
+                            result="goo" />
+                        <feBlend in="SourceGraphic" in2="goo" />
+                    </filter>
+                </defs>
+            </svg>
+            <div class="gradients-container">
+                <div class="g1"></div>
+                <div class="g2"></div>
+                <div class="g3"></div>
+                <div class="g4"></div>
+                <div class="g5"></div>
+                <div class="interactive"></div>
+            </div>
+            <div class="container">
+                <div class="main-content">
+                    <h1>IV Treinamento em Identificação, Monitoramento e
+                        Manejo de Afídeos e Parasitoides em Cereais de Inverno</h1>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <span class="section-subtitle">Sobre o evento</span>
+                <h2 class="section-title">III Workshop - Desenvolvimento de ferramentas para o suporte à tomada de
+                    decisão no manejo de afídeos-BYDV em trigo</h2>
+
+                <div class="row gy-4">
+                    <div class="col-md-12">
+                        <div class="event-card">
+                            <p class="mb-4">Um evento vinculado ao projeto <strong>Desenvolvimento e validação de
+                                    ferramentas para monitoramento e tomada decisão de manejo de epidemias causadas por
+                                    vírus transmitidos por insetos - CNPQ: 20.22.00.042.00.00.</strong></p>
+
+                            <h3 class="event-title">Objetivo</h3>
+                            <p class="mb-4">Atualizar os membros da Plataforma em identificação de afídeos e
+                                parasitoides; padrões populacionais de afídeos, parasitoides e suas interações;
+                                estimativas de dano e eficiência de estratégias de manejo; uso da plataforma TrapSystem,
+                                do modelo de simulação ABISM e dos softwares para contagem de afídeos em plantas
+                                AgroExperiment, identificação e detecção de insetos em imagens digitais: AphidCV e
+                                InsectCV.</p>
+
+                            <h3 class="event-title">Resultados esperados</h3>
+                            <p>Equipe capacitada a identificar afídeos e parasitoides e apta a utilizar as ferramentas
+                                de tecnologia de informação para construção e desenvolvimento de uma base segura com
+                                informações históricas sobre populações de afídeos e parasitoides, suas interações, seus
+                                impactos e seu manejo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="schedule" class="schedule-section">
+            <div class="container">
+                <span class="section-subtitle">Programação</span>
+                <h2 class="section-title">Agenda do evento</h2>
+
+                <div class="schedule-day">
+                    <h3 class="day-title">Quinta (01/06/2023)</h3>
+
+                    <div class="schedule-period">
+                        <h4 class="period-title">Manhã</h4>
+
+                        <div class="schedule-item">
+                            <div class="schedule-time">08:15 às 08:30</div>
+                            <h5>Abertura e apresentação do projeto CNPQ</h5>
+                            <div class="location-details">
+                                <div class="event-location">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <span>UPF - Campus I</span>
+                                </div>
+                                <div class="event-location">
+                                    <i class="bi bi-building"></i>
+                                    <span>Auditório da Pós-graduação em Agronomia - G3</span>
+                                </div>
+                                <div class="event-location">
+                                    <i class="bi bi-person"></i>
+                                    <span>Responsável: Dr. Douglas Lau</span>
+                                </div>
+                            </div>
+                            <div class="schedule-time">08:30 às 10:00</div>
+                            <h5>Principais espécies de afídeos que atacam cereais de inverno - teoria e prática</h5>
+                            <div class="location-details">
+                                <div class="event-location">
+                                    <i class="bi bi-person"></i>
+                                    <span>Responsável: Dr. Paulo Roberto do Valle da Silva Pereira e Dra. Vânia
+                                        Bianchin</span>
+                                </div>
+                            </div>
+                            <div class="schedule-time">10:00 às 10:15</div>
+                            <h5>Intervalo</h5>
+                            <div class="schedule-time">10:15 às 12:00</div>
+                            <h5>Identificação de parasitóides de afídeos pragas em cereais de inverno: caracteres
+                                morfológicos e identificação das principais espécies de parasitóides que atacam os
+                                afídeos dos cereais - teoria e prática</h5>
+                            <div class="location-details">
+                                <div class="event-location">
+                                    <i class="bi bi-person"></i>
+                                    <span>Responsável: Dr. Marcus Vinícius Sampaio e Ms. Carlos Diego Ribeiro dos
+                                        Santos</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="schedule-period">
+                        <h4 class="period-title">Tarde</h4>
+
+                        <div class="schedule-item">
+                            <div class="schedule-time">14:00 às 15:00</div>
+                            <h5>Mapeamento de populações de afídeos em microparcelas e organização de dados para o
+                                Agroexperiment</h5>
+                            <div class="location-details">
+                                <div class="event-location">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <span>Embrapa Trigo</span>
+                                </div>
+                                <div class="event-location">
+                                    <i class="bi bi-building"></i>
+                                    <span>Laboratório de Entomologia</span>
+                                </div>
+                                <div class="event-location">
+                                    <i class="bi bi-person"></i>
+                                    <span>Responsável: Ms.Talison Roberto Maurer</span>
+                                </div>
+                            </div>
+                            <div class="schedule-time">15:00 às 15:45</div>
+                            <h5>Processamento de amostras para contagem de afídeos em plantas e digitalização para o
+                                Trap System</h5>
+                            <div class="location-details">
+                                <div class="event-location">
+                                    <i class="bi bi-person"></i>
+                                    <span>Responsável: Dra. Vânia Bianchin</span>
+                                </div>
+                            </div>
+                            <div class="schedule-time">15:45 às 16:00</div>
+                            <h5>Intervalo</h5>
+                            <div class="schedule-time">16:00 às 16:30</div>
+                            <h5>Processamento de amostras para contagem de afídeos em plantas e digitalização para o
+                                Trap System</h5>
+                            <div class="location-details">
+                                <div class="event-location">
+                                    <i class="bi bi-person"></i>
+                                    <span>Responsável: Dra.Vânia Bianchin</span>
+                                </div>
+                            </div>
+                            <div class="schedule-time">16:30 às 17:30</div>
+                            <h5>Visita às criações de afídeos</h5>
+                            <div class="location-details">
+                                <div class="event-location">
+                                    <i class="bi bi-person"></i>
+                                    <span>Responsável: Ms. Paulo Ernani Peres Ferreira</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="schedule-day">
+                            <h3 class="day-title">Sexta (02/06/2023)</h3>
+
+                            <div class="schedule-period">
+                                <h4 class="period-title">Manhã</h4>
+
+                                <div class="schedule-item">
+                                    <div class="schedule-time">08:30 às 09:30</div>
+                                    <h5>Apresentação</h5>
+                                    <div class="location-details">
+                                        <div class="event-location">
+                                            <i class="bi bi-geo-alt"></i>
+                                            <span>IFSul - Campus Passo Fundo</span>
+                                        </div>
+                                        <div class="event-location">
+                                            <i class="bi bi-building"></i>
+                                            <span>Locais: Salas 505, 510, 511, 513 e Youtube</span>
+                                        </div>
+                                        <div class="event-location">
+                                            <i class="bi bi-person"></i>
+                                            <span>Responsável: Dr. Douglas Lau e Ms. Telmo Júnior</span>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-time">09:30 às 10:15</div>
+                                    <h5>Cenário atual de perspectivas para a plataforma Trap System</h5>
+                                    <div class="location-details">
+                                        <div class="event-location">
+                                            <i class="bi bi-person"></i>
+                                            <span>Responsável: Dr. Alexandre Lazzaretti</span>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-time">10:15 às 10:30</div>
+                                    <h5>Intervalo</h5>
+                                    <div class="schedule-time">10:30 às 11:30</div>
+                                    <h5>InsectCV: software para identificação e contagem de afídeos alados e
+                                        parasitoides em
+                                        imagens digitais</h5>
+                                    <div class="location-details">
+                                        <div class="event-location">
+                                            <i class="bi bi-person"></i>
+                                            <span>Responsável: Prof. Ms. Telmo Júnior</span>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-time">11:30 às 13:30</div>
+                                    <h5>Intervalo para o Almoço</h5>
+                                </div>
+                            </div>
+
+                            <div class="schedule-period">
+                                <h4 class="period-title">Tarde</h4>
+
+                                <div class="schedule-item">
+                                    <div class="schedule-time">13:30 às 14:30</div>
+                                    <h5>AgroExperiment: ferramenta web para coordenação de experimentos sobre dinâmica
+                                        populacional de insetor</h5>
+                                    <div class="location-details">
+                                        <div class="event-location">
+                                            <i class="bi bi-geo-alt"></i>
+                                            <span>IFSul - Campus Passo Fundo</span>
+                                        </div>
+                                        <div class="event-location">
+                                            <i class="bi bi-building"></i>
+                                            <span>Locais: Salas 505, 510, 511 e Youtube</span>
+                                        </div>
+                                        <div class="event-location">
+                                            <i class="bi bi-person"></i>
+                                            <span>Responsável: Prof. Ms. Jorge Bavaresco</span>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-time">14:30 às 15:30</div>
+                                    <h5>AphidCV: software para contagem, classificação e mensuração de afídeos</h5>
+                                    <div class="location-details">
+                                        <div class="event-location">
+                                            <i class="bi bi-person"></i>
+                                            <span>Responsável: Prof. Dr. Rafael Rieder</span>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-time">15:30 às 16:00</div>
+                                    <h5>Intervalo</h5>
+                                    <div class="schedule-time">16:00 às 17:00</div>
+                                    <h5>ABISM: modelo de simulação para auxliar no suporte à tomada de decisão para o
+                                        manejo de
+                                        afídeos</h5>
+                                    <div class="location-details">
+                                        <div class="event-location">
+                                            <i class="bi bi-person"></i>
+                                            <span>Responsável: Prof. Dr. Roberto Wiest</span>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-time">17:00 às 18:00</div>
+                                    <h5>Análise de dados populacionais</h5>
+                                    <div class="location-details">
+                                        <div class="event-location">
+                                            <i class="bi bi-person"></i>
+                                            <span>Responsável: Ms. Eduardo Engel</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+        </section>
+
+        <section id="time" class="py-5 bg-light">
+            <div class="container">
+                <span class="section-subtitle">Organização</span>
+                <h2 class="section-title">Responsáveis</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="event-card text-center">
+                            <img src="../../assets/img/speakers/Douglas.jpg" alt="Douglas" class="speaker-image mb-3">
+                            <h4 class="event-title mb-2">Douglas Lau</h4>
+                            <p class="email-text mb-2">douglas.lau@embrapa.br</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="footer-placeholder"></div>
+        <script>
+            fetch('../footer/index.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                });
+        </script>
+
+    </main>
+    <script src="../interactive-bubble.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
