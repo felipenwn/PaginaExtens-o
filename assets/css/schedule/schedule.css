@@ -159,7 +159,8 @@ html {
 }
 
 .event-time,
-.event-location {
+.event-location,
+.event-date {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -407,4 +408,11 @@ html {
     .event-card {
         padding: 1.5rem;
     }
+}
+
+.schedule-wrapper {
+    display: flex;
+    align-items: bttom;
+    justify-content: center;
+    gap: 20vh;
 }

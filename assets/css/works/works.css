@@ -76,7 +76,8 @@ html {
     color: #304293;
 }
 
-.event-location {
+.event-location,
+.event-date {
     display: flex;
     align-items: center;
     gap: 0.5rem;

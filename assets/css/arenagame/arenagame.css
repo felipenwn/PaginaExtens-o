@@ -33,6 +33,7 @@ html {
   background: white;
   border-radius: 10px;
   padding: 2rem;
+  align-items: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   height: 100%;
@@ -375,4 +376,15 @@ html {
   .game-mode-card .game-title {
     font-size: 1.25rem;
   }
+}
+
+.game-image {
+  width: 100%;
+  border-radius: 10px;
+  border: 3px solid #304293;
+  display: block;
+}
+
+#topicos .row {
+  justify-content: center;
 }
