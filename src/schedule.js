@@ -1,93 +1,120 @@
 const scheduleData = {
     '11': [
         {
-            title: 'Palestra de apoiadores',
-            date: '11/08/2025',
-            time: '08:00 às 12:00',
-            location: 'A definir',
-            description: 'Cerimônia de abertura do evento.',
-            /*speakers: [{
-               name: 'Rafael Rieder',
-               image: '../../assets/img/speakers/Rieder.jpg',
-               titles: ['Doutor e pesquisador em Ciência da Computação,'],
-               bio: 'Rafael Rieder é pesquisador e doutor em Ciência da Computação, docente permanente do Programa de Pós-Graduação em Computação Aplicada (PPGCA), e professor da Universidade de Passo Fundo (UPF) desde 2011. Participou da comissão de criação do curso de Engenharia de Computação na UPF, e foi o primeiro coordenador do curso (2014-2015). Também atuou na comissão de criação do PPGCA na UPF (2013), e foi coordenador do programa no quadriênio 2017-2020. Publicou vários artigos em periódicos qualificados e trabalhos em anais de conferências nacionais e internacionais, além de organizar eventos dentro das temáticas de Realidade Virtual e Aumentada e Computação Aplicada à Agricultura. Desde 2016, coordena o Núcleo de Visualização e Modelagem Computacional no Parque Científico e Tecnológico da UPF (UPF Parque), onde está sediado o Laboratório de Realidade Virtual e Computação de Alto Desempenho. Seus principais projetos de P&D&I têm interface de Computação Aplicada à Agricultura e à Saúde, nas áreas de Realidade Virtual, Realidade Aumentada, Realidade Misturada, Aprendizado de Máquina, Processamento de Imagens e Visão Computacional. É bolsista produtividade em desenvolvimento tecnológico e extensão inovadora do CNPq - Nível 2.'
-           }]*/
+            title: 'Em breve',
+            date: 'A definir',
+            time: 'A definir',
+            location: 'IFSUL Passo Fundo',
+            description: 'Em breve',
         }
     ],
     '12': [
         {
-            title: 'Workshop 1',
-            date: '12/08/2025',
-            time: '08:00 às 12:00',
-            location: 'A definir',
-            description: 'Atividade sobre IA.',
-            /*speakers: [{
-               name: 'Rafael Rieder',
-               image: '../../assets/img/speakers/Rieder.jpg',
-               titles: ['Doutor e pesquisador em Ciência da Computação,'],
-               bio: 'Rafael Rieder é pesquisador e doutor em Ciência da Computação, docente permanente do Programa de Pós-Graduação em Computação Aplicada (PPGCA), e professor da Universidade de Passo Fundo (UPF) desde 2011. Participou da comissão de criação do curso de Engenharia de Computação na UPF, e foi o primeiro coordenador do curso (2014-2015). Também atuou na comissão de criação do PPGCA na UPF (2013), e foi coordenador do programa no quadriênio 2017-2020. Publicou vários artigos em periódicos qualificados e trabalhos em anais de conferências nacionais e internacionais, além de organizar eventos dentro das temáticas de Realidade Virtual e Aumentada e Computação Aplicada à Agricultura. Desde 2016, coordena o Núcleo de Visualização e Modelagem Computacional no Parque Científico e Tecnológico da UPF (UPF Parque), onde está sediado o Laboratório de Realidade Virtual e Computação de Alto Desempenho. Seus principais projetos de P&D&I têm interface de Computação Aplicada à Agricultura e à Saúde, nas áreas de Realidade Virtual, Realidade Aumentada, Realidade Misturada, Aprendizado de Máquina, Processamento de Imagens e Visão Computacional. É bolsista produtividade em desenvolvimento tecnológico e extensão inovadora do CNPq - Nível 2.'
-           }]*/
-        },
-        {
-            title: 'Oficina 1',
-            date: '12/08/2025',
-            time: '08:00 às 12:00',
-            location: 'A definir',
-            description: 'Atividade interativa sobre IA.',
-            /*speakers: [{
-               name: 'Rafael Rieder',
-               image: '../../assets/img/speakers/Rieder.jpg',
-               titles: ['Doutor e pesquisador em Ciência da Computação,'],
-               bio: 'Rafael Rieder é pesquisador e doutor em Ciência da Computação, docente permanente do Programa de Pós-Graduação em Computação Aplicada (PPGCA), e professor da Universidade de Passo Fundo (UPF) desde 2011. Participou da comissão de criação do curso de Engenharia de Computação na UPF, e foi o primeiro coordenador do curso (2014-2015). Também atuou na comissão de criação do PPGCA na UPF (2013), e foi coordenador do programa no quadriênio 2017-2020. Publicou vários artigos em periódicos qualificados e trabalhos em anais de conferências nacionais e internacionais, além de organizar eventos dentro das temáticas de Realidade Virtual e Aumentada e Computação Aplicada à Agricultura. Desde 2016, coordena o Núcleo de Visualização e Modelagem Computacional no Parque Científico e Tecnológico da UPF (UPF Parque), onde está sediado o Laboratório de Realidade Virtual e Computação de Alto Desempenho. Seus principais projetos de P&D&I têm interface de Computação Aplicada à Agricultura e à Saúde, nas áreas de Realidade Virtual, Realidade Aumentada, Realidade Misturada, Aprendizado de Máquina, Processamento de Imagens e Visão Computacional. É bolsista produtividade em desenvolvimento tecnológico e extensão inovadora do CNPq - Nível 2.'
-           }]*/
-        },
+            title: 'Em breve',
+            date: 'A definir',
+            time: 'A definir',
+            location: 'IFSUL Passo Fundo',
+            description: 'Em breve',
+        }
     ],
     '13': [
         {
-            title: 'Oficina 2',
-            date: '13/08/2025',
-            time: '08:00 às 10:00',
-            location: 'A definir',
-            description: 'Atividade interativa sobre IA.',
-            /*speakers: [{
-               name: 'Rafael Rieder',
-               image: '../../assets/img/speakers/Rieder.jpg',
-               titles: ['Doutor e pesquisador em Ciência da Computação,'],
-               bio: 'Rafael Rieder é pesquisador e doutor em Ciência da Computação, docente permanente do Programa de Pós-Graduação em Computação Aplicada (PPGCA), e professor da Universidade de Passo Fundo (UPF) desde 2011. Participou da comissão de criação do curso de Engenharia de Computação na UPF, e foi o primeiro coordenador do curso (2014-2015). Também atuou na comissão de criação do PPGCA na UPF (2013), e foi coordenador do programa no quadriênio 2017-2020. Publicou vários artigos em periódicos qualificados e trabalhos em anais de conferências nacionais e internacionais, além de organizar eventos dentro das temáticas de Realidade Virtual e Aumentada e Computação Aplicada à Agricultura. Desde 2016, coordena o Núcleo de Visualização e Modelagem Computacional no Parque Científico e Tecnológico da UPF (UPF Parque), onde está sediado o Laboratório de Realidade Virtual e Computação de Alto Desempenho. Seus principais projetos de P&D&I têm interface de Computação Aplicada à Agricultura e à Saúde, nas áreas de Realidade Virtual, Realidade Aumentada, Realidade Misturada, Aprendizado de Máquina, Processamento de Imagens e Visão Computacional. É bolsista produtividade em desenvolvimento tecnológico e extensão inovadora do CNPq - Nível 2.'
-           }]*/
-        },
-        {
-            title: 'Hackathon',
-            date: '13/08/2025',
-            time: '08:00 às 12:00',
-            location: 'A definir',
-            description: 'Hackathons são eventos que reúnem desenvolvedores de software, designers e demais  profissionais relacionados à área de programação, com o intuito de criarem soluções inovadoras para algum problema específico',
-            speakers: [
-                {
-                    name: '⁠Murilo Bertella Ossanes',
-                    link: 'https://wa.link/lswjv7',
-                    image: '../../assets/img/Murilo.jpg'
-                }]
-        },
+            title: 'Em breve',
+            date: 'A definir',
+            time: 'A definir',
+            location: 'IFSUL Passo Fundo',
+            description: 'Em breve',
+        }
     ],
-    '28': [
-        {
-            title: 'Atividade com apoiadores: Palestra',
-            date: '28/05/2025',
-            time: '08:00 às 12:00',
-            location: 'A definir',
-            description: 'Evento de divulgação do evento e do patrocinador.',
-            /*speakers: [{
+    /* '11': [
+         {
+             title: 'A  de apoiadores',
+             date: '11/08/2025',
+             time: '08:00 às 12:00',
+             location: 'A definir',
+             description: 'Cerimônia de abertura do evento.',
+             speakers: [{
                 name: 'Rafael Rieder',
                 image: '../../assets/img/speakers/Rieder.jpg',
                 titles: ['Doutor e pesquisador em Ciência da Computação,'],
                 bio: 'Rafael Rieder é pesquisador e doutor em Ciência da Computação, docente permanente do Programa de Pós-Graduação em Computação Aplicada (PPGCA), e professor da Universidade de Passo Fundo (UPF) desde 2011. Participou da comissão de criação do curso de Engenharia de Computação na UPF, e foi o primeiro coordenador do curso (2014-2015). Também atuou na comissão de criação do PPGCA na UPF (2013), e foi coordenador do programa no quadriênio 2017-2020. Publicou vários artigos em periódicos qualificados e trabalhos em anais de conferências nacionais e internacionais, além de organizar eventos dentro das temáticas de Realidade Virtual e Aumentada e Computação Aplicada à Agricultura. Desde 2016, coordena o Núcleo de Visualização e Modelagem Computacional no Parque Científico e Tecnológico da UPF (UPF Parque), onde está sediado o Laboratório de Realidade Virtual e Computação de Alto Desempenho. Seus principais projetos de P&D&I têm interface de Computação Aplicada à Agricultura e à Saúde, nas áreas de Realidade Virtual, Realidade Aumentada, Realidade Misturada, Aprendizado de Máquina, Processamento de Imagens e Visão Computacional. É bolsista produtividade em desenvolvimento tecnológico e extensão inovadora do CNPq - Nível 2.'
-            }]*/
+            }]
+         }
+     ],
+     '12': [
+         {
+             title: 'Workshop 1',
+             date: '12/08/2025',
+             time: '08:00 às 12:00',
+             location: 'A definir',
+             description: 'Atividade sobre IA.',
+             speakers: [{
+                name: 'Rafael Rieder',
+                image: '../../assets/img/speakers/Rieder.jpg',
+                titles: ['Doutor e pesquisador em Ciência da Computação,'],
+                bio: 'Rafael Rieder é pesquisador e doutor em Ciência da Computação, docente permanente do Programa de Pós-Graduação em Computação Aplicada (PPGCA), e professor da Universidade de Passo Fundo (UPF) desde 2011. Participou da comissão de criação do curso de Engenharia de Computação na UPF, e foi o primeiro coordenador do curso (2014-2015). Também atuou na comissão de criação do PPGCA na UPF (2013), e foi coordenador do programa no quadriênio 2017-2020. Publicou vários artigos em periódicos qualificados e trabalhos em anais de conferências nacionais e internacionais, além de organizar eventos dentro das temáticas de Realidade Virtual e Aumentada e Computação Aplicada à Agricultura. Desde 2016, coordena o Núcleo de Visualização e Modelagem Computacional no Parque Científico e Tecnológico da UPF (UPF Parque), onde está sediado o Laboratório de Realidade Virtual e Computação de Alto Desempenho. Seus principais projetos de P&D&I têm interface de Computação Aplicada à Agricultura e à Saúde, nas áreas de Realidade Virtual, Realidade Aumentada, Realidade Misturada, Aprendizado de Máquina, Processamento de Imagens e Visão Computacional. É bolsista produtividade em desenvolvimento tecnológico e extensão inovadora do CNPq - Nível 2.'
+            }]
+         },
+         {
+             title: 'Oficina 1',
+             date: '12/08/2025',
+             time: '08:00 às 12:00',
+             location: 'A definir',
+             description: 'Atividade interativa sobre IA.',
+             speakers: [{
+                name: 'Rafael Rieder',
+                image: '../../assets/img/speakers/Rieder.jpg',
+                titles: ['Doutor e pesquisador em Ciência da Computação,'],
+                bio: 'Rafael Rieder é pesquisador e doutor em Ciência da Computação, docente permanente do Programa de Pós-Graduação em Computação Aplicada (PPGCA), e professor da Universidade de Passo Fundo (UPF) desde 2011. Participou da comissão de criação do curso de Engenharia de Computação na UPF, e foi o primeiro coordenador do curso (2014-2015). Também atuou na comissão de criação do PPGCA na UPF (2013), e foi coordenador do programa no quadriênio 2017-2020. Publicou vários artigos em periódicos qualificados e trabalhos em anais de conferências nacionais e internacionais, além de organizar eventos dentro das temáticas de Realidade Virtual e Aumentada e Computação Aplicada à Agricultura. Desde 2016, coordena o Núcleo de Visualização e Modelagem Computacional no Parque Científico e Tecnológico da UPF (UPF Parque), onde está sediado o Laboratório de Realidade Virtual e Computação de Alto Desempenho. Seus principais projetos de P&D&I têm interface de Computação Aplicada à Agricultura e à Saúde, nas áreas de Realidade Virtual, Realidade Aumentada, Realidade Misturada, Aprendizado de Máquina, Processamento de Imagens e Visão Computacional. É bolsista produtividade em desenvolvimento tecnológico e extensão inovadora do CNPq - Nível 2.'
+            }
+         },
+     ],
+     '13': [
+         {
+             title: 'Oficina 2',
+             date: '13/08/2025',
+             time: '08:00 às 10:00',
+             location: 'A definir',
+             description: 'Atividade interativa sobre IA.',
+             speakers: [{
+                name: 'Rafael Rieder',
+                image: '../../assets/img/speakers/Rieder.jpg',
+                titles: ['Doutor e pesquisador em Ciência da Computação,'],
+                bio: 'Rafael Rieder é pesquisador e doutor em Ciência da Computação, docente permanente do Programa de Pós-Graduação em Computação Aplicada (PPGCA), e professor da Universidade de Passo Fundo (UPF) desde 2011. Participou da comissão de criação do curso de Engenharia de Computação na UPF, e foi o primeiro coordenador do curso (2014-2015). Também atuou na comissão de criação do PPGCA na UPF (2013), e foi coordenador do programa no quadriênio 2017-2020. Publicou vários artigos em periódicos qualificados e trabalhos em anais de conferências nacionais e internacionais, além de organizar eventos dentro das temáticas de Realidade Virtual e Aumentada e Computação Aplicada à Agricultura. Desde 2016, coordena o Núcleo de Visualização e Modelagem Computacional no Parque Científico e Tecnológico da UPF (UPF Parque), onde está sediado o Laboratório de Realidade Virtual e Computação de Alto Desempenho. Seus principais projetos de P&D&I têm interface de Computação Aplicada à Agricultura e à Saúde, nas áreas de Realidade Virtual, Realidade Aumentada, Realidade Misturada, Aprendizado de Máquina, Processamento de Imagens e Visão Computacional. É bolsista produtividade em desenvolvimento tecnológico e extensão inovadora do CNPq - Nível 2.'
+            }]
+         },
+         {
+             title: 'Hackathon',
+             date: '13/08/2025',
+             time: '08:00 às 12:00',
+             location: 'A definir',
+             description: 'Hackathons são eventos que reúnem desenvolvedores de software, designers e demais  profissionais relacionados à área de programação, com o intuito de criarem soluções inovadoras para algum problema específico',
+             speakers: [
+                 {
+                     name: '⁠Murilo Bertella Ossanes',
+                     link: 'https://wa.link/lswjv7',
+                     image: '../../assets/img/Murilo.jpg'
+                 }]
+         },
+     ],*/
+    '27': [
+        {
+            title: 'Palestra | <b>Evolução da Computação com IA: Desafios e Oportunidades</b>',
+            date: '27/05/2025 (terça-feira)',
+            time: '08:00 às 12:00',
+            location: '<a href="https://www.google.com/maps/place/Instituto+Alian%C3%A7a+Empresarial/data=!4m2!3m1!1s0x0:0x16ef636891afbcbc?sa=X&ved=1t:2428&ictx=111" target="blank">Hub Aliança Empresarial</a>',
+            description: 'Evento de divulgação do evento e do patrocinador.',
+            speakers: [{
+                name: '<a href="https://www.linkedin.com/in/paulohenriquesantini/" target="blank">Paulo Henrique Santini</a >',
+                image: '../../assets/img/speakers/PauloH.jpg',
+                titles: ['CEO da Biall Digital Consulting e Mestre em Computação Aplicada'],
+                // bio: 'Mestre em Computação Aplicada pela Unisinos, em São Leopoldo. Bacharel em Análise e Desenvolvimento de Sistemas pelo Senac, em Passo Fundo-RS. Sou CEO da Biall Digital Consulting. Com uma sólida formação em administração de empresas e gestão de equipes, com foco em Business Intelligence, Desenvolvimento de Software e Aplicativos, Segurança Digital e Bancos de Dados, fundei a Biall com a missão de capacitar organizações por meio da transformação de dados em insights estratégicos. Ao longo dos anos, e com a expertise dos profissionais que atuam conosco, ampliamos nossa gama de serviços. A Biall se tornou uma referência no setor, oferecendo soluções inovadoras que impulsionam o sucesso dos negócios.'
+            }]
         },
     ],
     '31': [
         {
-            title: 'Arena Games (Counter Strike e League of Legends)',
+            title: '<b>Arena Games</b> (Counter Strike e League of Legends)',
             date: '31/05/2025',
             time: '08:00 às 11:00',
             location: 'Prédio a definir',
@@ -117,7 +144,7 @@ const scheduleData = {
 function createSpeakersSection(speakers) {
     return speakers.map(speaker => `
         <div class="speaker">
-            <img src="${speaker.image}" alt="${speaker.name}" class="speaker-image">
+            <img src="${speaker.image}" class="speaker-image">
             <div class="speaker-info">
                 <h4>${speaker.name}</h4>
                 ${speaker.titles ? `
@@ -125,7 +152,6 @@ function createSpeakersSection(speakers) {
                         ${speaker.titles.map(title => `<p>${title}</p>`).join('')}
                     </div>
                 ` : ''}
-                <a href="${speaker.link}" target="_blank">Clique para contato</a>
             </div>
         </div>
     `).join('');
@@ -239,6 +265,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 ` : ''}
                 ${day === '31' ? `
                     <a href="../arenagame/index.html" class="btn btn-primary">Mais informações</a>
+                ` :
+                day === '27' ? `
+                    <a href="https://painel.passofundo.ifsul.edu.br/" class="btn btn-primary">Inscrever-se</a>
                 ` : `
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal${index}">
                         Mais informações
@@ -295,6 +324,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    updateEventsList('31'); // alterar para 28
+    updateEventsList('27');
     document.querySelector(".day-button[data-day='28']").classList.add('active');
 });
