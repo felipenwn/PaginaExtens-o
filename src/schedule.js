@@ -114,7 +114,7 @@ const scheduleData = {
     ],
     '31': [
         {
-            title: '<b>Arena Games</b> (Counter Strike e League of Legends)',
+            title: '<b>Arena Games</b> (Counter Strike 2 e League of Legends)',
             date: '31/05/2025',
             time: '08:00 às 11:00',
             location: 'Prédio a definir',
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="../arenagame/index.html" class="btn btn-primary">Mais informações</a>
                 ` :
                 day === '27' ? `
-                    <a href="https://painel.passofundo.ifsul.edu.br/" class="btn btn-primary">Inscrever-se</a>
+                    <a href="https://painel.passofundo.ifsul.edu.br/syseve/inscricoes/" class="btn btn-primary">Inscrever-se</a>
                 ` : `
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal${index}">
                         Mais informações
