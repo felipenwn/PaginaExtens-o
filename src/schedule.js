@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 ` : ''}
                 ${day === '31' ? `
-                    <a href="../arenagame/index.html" class="btn btn-primary">Mais informações</a>
+                    <a href="../arenagames/index.html" class="btn btn-primary">Mais informações</a>
                 ` :
                 day === '27' ? `
                     <a href="https://painel.passofundo.ifsul.edu.br/syseve/inscricoes/" class="btn btn-primary">Inscrever-se</a>
