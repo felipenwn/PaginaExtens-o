@@ -29,6 +29,11 @@ html {
     color: #304293;
 }
 
+#prof-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
 .event-card {
     background: white;
     border-radius: 10px;
@@ -61,6 +66,7 @@ html {
     font-size: 1.2rem;
     color: #304293;
     margin-bottom: 0.5rem;
+    font-style: none;
 }
 
 .event-time span {
