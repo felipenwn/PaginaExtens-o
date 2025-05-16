@@ -99,9 +99,17 @@ const scheduleData = {
      ],*/
     '27': [
         {
+            title: 'Abertura do evento',
+            date: '27/05/2025 (terça-feira)',
+            time: '08:30 às 9:00',
+            location: '<a href="https://www.google.com/maps/place/Instituto+Alian%C3%A7a+Empresarial/data=!4m2!3m1!1s0x0:0x16ef636891afbcbc?sa=X&ved=1t:2428&ictx=111" target="blank">Hub Aliança Empresarial</a>',
+            description: 'Abertura do Esquenta IV Congresso de Tecnologia da Informação do IFSul Passo Fundo em parceria com o Hub Aliança Empresarial.',
+        },
+        {
+            id: 'main',
             title: 'Palestra | <b>Evolução da Computação com IA: Desafios e Oportunidades</b>',
             date: '27/05/2025 (terça-feira)',
-            time: '08:00 às 12:00',
+            time: '09:00 às 10:00',
             location: '<a href="https://www.google.com/maps/place/Instituto+Alian%C3%A7a+Empresarial/data=!4m2!3m1!1s0x0:0x16ef636891afbcbc?sa=X&ved=1t:2428&ictx=111" target="blank">Hub Aliança Empresarial</a>',
             description: 'Evento de divulgação do evento e do patrocinador.',
             speakers: [{
@@ -110,7 +118,20 @@ const scheduleData = {
                 titles: ['CEO da Biall Digital Consulting e Mestre em Computação Aplicada'],
                 // bio: 'Mestre em Computação Aplicada pela Unisinos, em São Leopoldo. Bacharel em Análise e Desenvolvimento de Sistemas pelo Senac, em Passo Fundo-RS. Sou CEO da Biall Digital Consulting. Com uma sólida formação em administração de empresas e gestão de equipes, com foco em Business Intelligence, Desenvolvimento de Software e Aplicativos, Segurança Digital e Bancos de Dados, fundei a Biall com a missão de capacitar organizações por meio da transformação de dados em insights estratégicos. Ao longo dos anos, e com a expertise dos profissionais que atuam conosco, ampliamos nossa gama de serviços. A Biall se tornou uma referência no setor, oferecendo soluções inovadoras que impulsionam o sucesso dos negócios.'
             }]
+        }, {
+            title: 'Roda de conversa',
+            date: '27/05/2025 (terça-feira)',
+            time: '10:00 às 11:00',
+            location: '<a href="https://www.google.com/maps/place/Instituto+Alian%C3%A7a+Empresarial/data=!4m2!3m1!1s0x0:0x16ef636891afbcbc?sa=X&ved=1t:2428&ictx=111" target="blank">Hub Aliança Empresarial</a>',
+            description: 'Discussões sobre a temática abordada na palestra principal e demais tópicos relacionados ao IV Congresso de Tecnologia da Informação do IFSul Passo Fundo.',
+        }, {
+            title: 'Encerramento',
+            date: '27/05/2025 (terça-feira)',
+            time: '11:00',
+            location: '<a href="https://www.google.com/maps/place/Instituto+Alian%C3%A7a+Empresarial/data=!4m2!3m1!1s0x0:0x16ef636891afbcbc?sa=X&ved=1t:2428&ictx=111" target="blank">Hub Aliança Empresarial</a>',
+            description: 'Encerramento do Esquenta IV Congresso de Tecnologia da Informação do IFSul Passo Fundo em parceria com o Hub Aliança Empresarial e retorno ao campus.',
         },
+
     ],
     '31': [
         {
@@ -244,29 +265,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createEventCard(event, index, day) {
         return `
-            <div class="event-card">
-                <h3 class="event-title">${event.title}</h3>
-                <div class="event-date">
-                    <i class="bi bi-calendar-check"></i>
-                    <span>${event.date}</span>
+        <div class="event-card">
+            <h3 class="event-title">${event.title}</h3>
+            <div class="event-date">
+                <i class="bi bi-calendar-check"></i>
+                <span>${event.date}</span>
+            </div>
+            <div class="event-time">
+                <i class="bi bi-clock"></i>
+                <span>${event.time}</span>
+            </div>
+            <div class="event-location">
+                <i class="bi bi-geo-alt"></i>
+                <span>${event.location}</span>
+            </div>
+            ${event.speakers ? `
+                <div class="speakers-container">
+                    ${createSpeakersSection(event.speakers)}
                 </div>
-                <div class="event-time">
-                    <i class="bi bi-clock"></i>
-                    <span>${event.time}</span>
-                </div>
-                <div class="event-location">
-                    <i class="bi bi-geo-alt"></i>
-                    <span>${event.location}</span>
-                </div>
-                ${event.speakers ? `
-                    <div class="speakers-container">
-                        ${createSpeakersSection(event.speakers)}
-                    </div>
-                ` : ''}
-                ${day === '31' ? `
+            ` : ''}
+            ${day === '31' ? `
                     <a href="../arenagames/index.html" class="btn btn-primary">Mais informações</a>
                 ` :
-                day === '27' ? `
+                (day === '27' && event.id === 'main') ? `
                     <a href="https://painel.passofundo.ifsul.edu.br/syseve/inscricoes/" class="btn btn-primary">Inscrever-se</a>
                 ` : `
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal${index}">
@@ -281,9 +302,10 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </div>
                                 <div class="modal-body">
                                     <div class="event-details">
-                                        <p><strong>Horário:</strong> ${event.time}</p>
-                                        <p><strong>Local:</strong> ${event.location}</p>
-                                        <p><strong>Descrição:</strong> ${event.description}</p>
+                                        <p><span style="font-weight:bold;">Data:</span><span style="font-weight: normal;"> ${event.date}</span></p>
+                                        <p><span style="font-weight:bold;">Horário:</span><span style="font-weight: normal;"> ${event.time}</span></p>
+                                        <p><span style="font-weight:bold;">Local:</span><span style="font-weight: normal;"> ${event.location}</span></p>
+                                        <p><span style="font-weight:bold;">Descrição:</span><span style="font-weight: normal;"> ${event.description}</span></p>
                                     </div>
                                     ${event.speakers ? `
                                         <div class="speakers-details">
@@ -311,10 +333,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         </div>
                     </div>
-                `}
-            </div>
-        `;
+                `
+            }
+        </div>
+    `;
     }
+
 
     dayButtons.forEach(button => {
         button.addEventListener('click', () => {
