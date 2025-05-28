@@ -1,10 +1,11 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+    --verde1: rgb(53, 152, 48);
+    --verde2: rgb(44, 68, 32);
+    --vermelho1: rgb(201, 12, 15);
 }
 
 body {
+    margin: 0;
     min-height: 100vh;
     font-family: 'Open Sans', sans-serif;
 }
@@ -14,11 +15,15 @@ html {
 }
 
 .section-subtitle {
-    color: #304293;
+    color: var(--verde1);
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     margin-bottom: 1rem;
     display: block;
+}
+
+.desc-icon {
+    margin-right: 7px;
 }
 
 .section-title {
@@ -26,43 +31,50 @@ html {
     font-weight: 700;
     font-size: 2.5rem;
     margin-bottom: 1.5rem;
-    color: #304293;
+    color: var(--verde1);
 }
 
-.event-card {
-    background: white;
-    border-radius: 10px;
-    padding: 2rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    height: 100%;
-}
-
-.event-card:hover {
-    transform: translateY(-5px);
-}
-
-.event-title {
+.btn-primary,
+.btn-secondary {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background-color: var(--verde2);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.5rem;
-    color: #304293;
-    margin-bottom: 1rem;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+    border: none;
 }
 
-.event-location {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #666;
-    margin-bottom: 0.5rem;
+.btn-primary:hover,
+.btn-secondary:hover {
+    background-color: #146300;
+    color: white;
 }
 
 .main {
-    min-height: 50vh;
+    margin-top: 76px;
+    min-height: 30vh;
     width: 100%;
-    position: relative;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     display: flex;
     align-items: center;
+    position: relative;
+}
+
+.main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .main-content {
@@ -85,97 +97,157 @@ html {
     margin-bottom: 0.5rem;
 }
 
-.speaker-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 0 auto;
-    border: 3px solid #304293;
-}
-
-.email-text {
-    color: #666;
-    font-size: 0.9rem;
-    word-break: break-word;
-}
-
-.about-section {
-    padding: 5rem 0;
-    background-color: #f9f9f9;
-}
-
 .schedule-section {
-    padding: 5rem 0;
+    padding: 4rem 0;
+    background-color: #f8f9fa;
 }
 
-.schedule-day {
+.month-selector {
+    text-align: center;
     margin-bottom: 3rem;
 }
 
-.day-title {
+.month-title {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 1.8rem;
-    color: #304293;
+    font-size: 2rem;
+    color: var(--verde1);
     margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #304293;
 }
 
-.schedule-period {
+.days-list {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
     margin-bottom: 2rem;
 }
 
-.period-title {
+.day-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--verde1);
+    background: none;
+    color: var(--verde1);
     font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-size: 1.3rem;
-    color: #304293;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.day-button.active,
+.day-button:hover {
+    background-color: var(--verde1);
+    color: white;
+}
+
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.event-card {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.event-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    color: var(--verde1);
     margin-bottom: 1rem;
 }
 
-.schedule-item {
-    border-left: 3px solid #304293;
-    padding-left: 1.5rem;
-    margin-bottom: 1.5rem;
-    position: relative;
-}
-
-.schedule-item::before {
-    content: "";
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #304293;
-    left: -7.5px;
-    top: 8px;
-}
-
-.schedule-time {
-    font-weight: 600;
-    color: #304293;
+.event-time,
+.event-courses,
+.event-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
     margin-bottom: 0.5rem;
-    margin-top: 1.5rem;
 }
 
-.location-details {
-    background-color: #f0f4ff;
-    padding: 0.7rem;
-    border-radius: 5px;
-    margin: 0.5rem 0;
+.carousel.inner{
+    display: flex;
+}
+
+.custom-crsl-btn {
+    color:var(--verde1);
+  }
+.custom-crsl-btn.left {
+    transform: translateX(-50%);
+}
+.custom-crsl-btn:hover, .custom-crsl-btn:focus, .custom-crsl-btn:active {
+    color:var(--verde2);
+  }
+
+.speakers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.speaker {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+
+
+.speaker:hover {
+    background-color: #f8f9fa;
+}
+
+.speaker-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--verde1);
+}
+
+.speaker-info {
+    flex: 1;
+}
+
+.speaker-info p {
+    color: #666;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.speaker-info h4 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--verde1);
+    margin: 0;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    margin-top: 1rem;
+    display: inline-block;
 }
 
 :root {
-    --color-bg1: rgb(60, 7, 101);
-    --color-bg2: rgb(0, 17, 82);
-    --color1: 18, 113, 255;
-    --color2: 221, 74, 255;
-    --color3: 100, 220, 255;
+    --color-bg1: rgb(25, 108, 0);
+    --color-bg2: rgb(8, 78, 0);
+    --color1: 18, 113, 0;
+    --color2: 221, 74, 0;
+    --color3: 100, 220, 0;
     --color4: 200, 50, 50;
     --color5: 180, 180, 50;
-    --color-interactive: 140, 100, 255;
+    --color-interactive: 140, 200, 0;
     --circle-size: 80%;
     --blending: hard-light;
 }
@@ -324,6 +396,7 @@ html {
 }
 
 @media (max-width: 768px) {
+
     .main-content {
         width: 100%;
     }
@@ -336,16 +409,31 @@ html {
         font-size: 1rem;
     }
 
+    .btn-primary {
+        padding: 0.6rem 1.5rem;
+    }
+
     .section-title {
         font-size: 2rem;
     }
 
-    .speaker-image {
-        width: 120px;
-        height: 120px;
+    .features-center {
+        order: -1;
+        margin-bottom: 2rem;
     }
 
-    .email-text {
-        font-size: 0.8rem;
+    .events-list {
+        padding: 0 1rem;
     }
+
+    .event-card {
+        padding: 1.5rem;
+    }
+}
+
+.schedule-wrapper {
+    display: flex;
+    align-items: bttom;
+    justify-content: center;
+    gap: 20vh;
 }
