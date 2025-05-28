@@ -1,1 +1,3 @@
-node_modules
+#Dependencias, caso existam.
+/api/node_modules
+/client/node_modules
