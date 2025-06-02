@@ -1,9 +1,31 @@
 import express from "express";
 import { db } from './db.js';
+import cors from "cors";
+import multer from 'multer';
+
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // this folder must exist
+  },
+  filename: function (req, file, cb) {
+    // Save as: speaker-12345.png
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, 'speaker-' + uniqueSuffix + ext);
+  }
+});
+
+const upload = multer({ storage: storage });
+
+// Make the uploads folder public
+app.use('/uploads', express.static('uploads'));
 
 app.get('/projetos', (req, res) => {
     const query = `
@@ -13,10 +35,11 @@ app.get('/projetos', (req, res) => {
         e.date, 
         e.courses,
         e.description,
-        s.name AS speaker_name, 
-        s.image AS speaker_image 
+        e.capa,
+        s.nome AS membro_nome, 
+        s.image AS membro_image 
       FROM projetos e
-      LEFT JOIN membros s ON e.id = s.event_id
+      LEFT JOIN membros s ON e.id = s.projeto_id
     `;
   
     db.all(query, [], (err, rows) => {
@@ -28,21 +51,21 @@ app.get('/projetos', (req, res) => {
       // Group rows by event
       const eventsMap = {};
       rows.forEach(row => {
-        if (!eventsMap[row.event_id]) {
-          eventsMap[row.event_id] = {
-            id: row.event_id,
-            titulo: row.title,
-            data: row.date,
-            cursos: row.courses,
-            descricao: row.description,
+        if (!eventsMap[row.projeto_id]) {
+          eventsMap[row.projeto_id] = {
+            id: row.projeto_id,
+            titulo: row.titulo,
+            data: row.data,
+            cursos: row.cursos,
+            descricao: row.descricao,
             membros: []
           };
         }
   
-        if (row.speaker_name) {
-          eventsMap[row.event_id].membros.push({
-            nome: row.speaker_name,
-            image: row.speaker_image
+        if (row.membro_nome) {
+          eventsMap[row.projeto_id].membros.push({
+            nome: row.membro_nome,
+            image: row.membro_image
           });
         }
       });
@@ -66,9 +89,10 @@ app.get('/membros', (req, res) => {
 
 app.post('/projetos', (req, res) => {
     db.serialize(() => {
+      const {titulo, data, cursos, descricao, capa} = req.body;
         db.run(
-            `INSERT INTO projetos (title, date, courses, description) VALUES (?, ?, ?, ?)`,
-            [req.query.titulo, convertToISO(req.query.data), req.query.cursos, req.query.descricao],
+            `INSERT INTO projetos (titulo, data, cursos, descricao, capa) VALUES (?, ?, ?, ?, ?)`,
+            [titulo, convertToISO(data), cursos, descricao, capa],
             function (err) {
                 if (err) return res.status(500).send(err.message);
             }
@@ -80,9 +104,10 @@ app.post('/projetos', (req, res) => {
 
 app.post('/membros', (req, res) => {
     db.serialize(() => {
+        const {IDprojeto, nome, image} = req.body;
         db.run(
-            `INSERT INTO membros (event_id, name, image) VALUES (?, ?, ?)`,
-            [req.query.IDprojeto, req.query.nome, req.query.image],
+            `INSERT INTO membros (projeto_id, nome, image) VALUES (?, ?, ?)`,
+            [IDprojeto, nome, image],
             function (err) {
                 if (err) return res.status(500).send(err.message);
             }

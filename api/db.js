@@ -7,10 +7,11 @@ db.serialize(() => {
   db.run(`
     CREATE TABLE IF NOT EXISTS projetos (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT NOT NULL,
-      date DATE NOT NULL,
-      courses TEXT,
-      description TEXT
+      titulo TEXT NOT NULL,
+      data DATE NOT NULL,
+      capa TEXT NOT NULL,
+      cursos TEXT,
+      descricao TEXT
     )
   `);
 
@@ -18,10 +19,10 @@ db.serialize(() => {
   db.run(`
     CREATE TABLE IF NOT EXISTS membros (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      event_id INTEGER NOT NULL,
-      name TEXT NOT NULL,
+      projeto_id INTEGER NOT NULL,
+      nome TEXT NOT NULL,
       image TEXT,
-      FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
+      FOREIGN KEY (projeto_id) REFERENCES projetos(id) ON DELETE CASCADE
     )
   `);
 
