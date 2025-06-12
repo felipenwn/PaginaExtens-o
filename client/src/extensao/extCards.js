@@ -1,15 +1,15 @@
 let scheduleData = [];
 
-function createSpeakersSection(speakers) {
-    return speakers.map((speaker, index) => `
+function createSpeakersSection(membros) {
+    return membros.map((membro, index) => `
         <div class="carousel-item${index === 0 ? ' active' : ''}">
         <div class="speaker">
-            <img src="http://localhost:3000${speaker.image}" class="speaker-image">
+            <img src="http://localhost:3000${membro.image}" class="speaker-image">
             <div class="speaker-info">
-                <h4>${speaker.nome}</h4>
-                ${speaker.titles ? `
+                <h4>${membro.nome}</h4>
+                ${membro.titulos ? `
                     <div class="speaker-titles">
-                        ${speaker.titles.map(title => `<p>${title}</p>`).join('')}
+                        <p>${membro.titulos}</p>
                     </div> 
                 ` : ''}
             </div>
@@ -18,14 +18,17 @@ function createSpeakersSection(speakers) {
     `).join('');
 }
 
-async function fetchData() {
-    const response = await fetch("http://localhost:3000/projetos");
+async function fetchProjetos() {
+    const response = await fetch("https://localhost:3000/projetos", {
+        method: 'GET',
+        credentials: 'include'  // important if you use cookies
+      });
     scheduleData = await response.json();
     console.log("Fetched:", scheduleData);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetchData().then(() => {
+    fetchProjetos().then(() => {
         const dayButtons = document.querySelectorAll('.day-button');
         const eventsContainer = document.querySelector('.events-list');
 
@@ -54,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function createEventCard(event, index, day) {
             return `
         <div class="card event-card d-flex flex-row">
-            <img class="card-img flex-grow-1 h-100" src="../../assets/img/2014.jpg";>
+            <img class="card-img flex-grow-1 h-100" src="https://localhost:3000${event.capa}";>
             <div class="card-body flex-grow-3 p-3">
                 <h3 class="event-title">${event.titulo}</h3>
                 <div class="event-date">

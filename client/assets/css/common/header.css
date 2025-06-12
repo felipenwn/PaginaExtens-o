@@ -1,23 +1,31 @@
 .navbar {
-  padding: 0.5rem 0;
+  padding: auto 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
   height: 50px;
   width: auto;
+  
 }
 
-.nav-link {
+.profile-img{
+  height: 50px;
+  width: 50px;
+  clip-path: circle(50% at center);
+  object-fit: cover; 
+  object-position: center;
+}
+
+.nav-item {
+  align-content: center;
   color: #333;
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.9rem;
+  font-size: 1rem;
   transition: color 0.3s ease;
+  margin: 0 10px;
 }
 
-.nav-link:hover {
-  color: #0f085a;
-}
 
 .dropdown-menu {
   border: none;

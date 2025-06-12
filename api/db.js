@@ -21,6 +21,7 @@ db.serialize(() => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       projeto_id INTEGER NOT NULL,
       nome TEXT NOT NULL,
+      titulos TEXT,
       image TEXT,
       FOREIGN KEY (projeto_id) REFERENCES projetos(id) ON DELETE CASCADE
     )

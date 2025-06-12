@@ -1,3 +1,4 @@
 #Dependencias, caso existam.
 /api/node_modules
 /client/node_modules
+/api/extensao.db
