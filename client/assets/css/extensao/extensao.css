@@ -173,19 +173,43 @@ html {
     margin-bottom: 0.5rem;
 }
 
-.carousel.inner{
+.btn-x {
+    height: fit-content;
+}
+
+.custom-card {
+    align-items: stretch;
+}
+
+.custom-card-img {
+    width: 50%;
+    min-height: 75%;
+    object-fit: cover;
+    height: auto;
+    /* Or set fixed height if needed */
+}
+
+.card-body {
+    width: 50%;
+}
+
+.carousel.inner {
     display: flex;
 }
 
 .custom-crsl-btn {
-    color:var(--verde1);
-  }
+    color: var(--verde1);
+}
+
 .custom-crsl-btn.left {
     transform: translateX(-50%);
 }
-.custom-crsl-btn:hover, .custom-crsl-btn:focus, .custom-crsl-btn:active {
-    color:var(--verde2);
-  }
+
+.custom-crsl-btn:hover,
+.custom-crsl-btn:focus,
+.custom-crsl-btn:active {
+    color: var(--verde2);
+}
 
 .speakers-container {
     display: flex;

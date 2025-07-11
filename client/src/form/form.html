@@ -27,30 +27,44 @@
 
   <main class="container py-5 mt-5">
     <h1 class="mb-4">Novo Projeto de Extensão</h1>
-    <form id="project-form" action="/api/projetos" method="POST" enctype="multipart/form-data">
+    <form id="project-form">
       <div class="mb-3">
         <label for="titulo" class="form-label">Título do Projeto</label>
-        <input type="text" class="form-control" name="titulo" required />
+        <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Nome do projeto" required />
       </div>
 
       <div class="mb-3">
         <label for="data" class="form-label">Data</label>
-        <input type="date" class="form-control" name="data" required />
+        <input type="date" class="form-control" id="data" name="data"/>
       </div>
 
       <div class="mb-3">
-        <label for="capa" class="form-label">Imagem de Capa</label>
-        <input type="file" class="form-control" name="capa" accept="image/*" required />
+        <label for="capa" class="form-label">Imagem da Capa</label>
+        <input type="file" class="form-control" name="capa" id="capa" accept="image/*" required />
       </div>
 
       <div class="mb-3">
-        <label for="cursos" class="form-label">Cursos Relacionados</label>
-        <input type="text" class="form-control" name="cursos" placeholder="Ex: BCC, EC" />
+        <label for="cursos" class="form-label">Cursos relacionados</label><br>
+        <div id="cursos">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="cursos" value="BCC" id="cursoBCC">
+            <label class="form-check-label" for="cursoBCC">BCC</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="cursos" value="EC" id="cursoEC">
+            <label class="form-check-label" for="cursoEC">EC</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="cursos" value="EM" id="cursoEM">
+            <label class="form-check-label" for="cursoEM">EM</label>
+          </div>
+        </div>
       </div>
+      
 
       <div class="mb-3">
         <label for="descricao" class="form-label">Descrição</label>
-        <textarea class="form-control" name="descricao" rows="4"></textarea>
+        <textarea class="form-control" name="descricao" id="descricao" rows="4" placeholder="Insira o objetivo do projeto, os métodos, o local e outras informações relevantes de maneira breve"></textarea>
       </div>
 
       <hr />
@@ -72,39 +86,10 @@
       });
   </script>
 
-  <script src="../interactive-bubble.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
   <script src="../header/authSuap.js"></script>
-
-  <script>
-    let membroCount = 0;
-
-    function addMembro() {
-      const container = document.getElementById("membros-container");
-
-      const membroDiv = document.createElement("div");
-      membroDiv.classList.add("border", "p-3", "mb-3", "rounded");
-      membroDiv.innerHTML = `
-        <div class="mb-3">
-          <label class="form-label">Nome do Membro</label>
-          <input type="text" class="form-control" name="membros[${membroCount}][nome]" required>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Títulos</label>
-          <input type="text" class="form-control" name="membros[${membroCount}][titulos]">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Imagem do Membro</label>
-          <input type="file" class="form-control" name="membros[${membroCount}][image]" accept="image/*">
-        </div>
-        <button type="button" class="btn btn-sm btn-outline-danger" onclick="this.parentElement.remove()">Remover</button>
-      `;
-
-      container.appendChild(membroDiv);
-      membroCount++;
-    }
-  </script>
+  <script src="./formScript.js"></script>
 </body>
 
 </html>

@@ -7,10 +7,12 @@ import https from 'https';
 import axios from 'axios';
 import cookieParser from "cookie-parser";
 import qs from 'qs';
+import path from 'path';
 
 const app = express();
 const PORT = 3000;
-const allowedOrigins = ['https://127.0.0.1:5500']
+const allowedOrigins = ['https://127.0.0.1:5500', 'http://127.0.0.1:5500']
+const allowedUserRoles = "docente estagiario"
 
 const options = {
   key: fs.readFileSync('./cert/key.pem'),
@@ -21,7 +23,6 @@ const options = {
 app.use(express.json());
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps, curl, Postman)
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
       const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
@@ -34,15 +35,15 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // this folder must exist
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    // Save as: speaker-12345.png
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     const ext = path.extname(file.originalname);
-    cb(null, 'speaker-' + uniqueSuffix + ext);
+    cb(null, 'upload-' + uniqueSuffix + ext);
   }
 });
 
@@ -65,6 +66,7 @@ app.get('/projetos', (req, res) => {
         s.image AS membro_image 
       FROM projetos e
       LEFT JOIN membros s ON e.id = s.projeto_id
+      ORDER BY e.id DESC
     `;
 
   db.all(query, [], (err, rows) => {
@@ -97,11 +99,10 @@ app.get('/projetos', (req, res) => {
       }
     });
 
-    const events = Object.values(eventsMap);
+    const events = Object.values(eventsMap).sort((a, b) => b.id - a.id);
     res.json(events);
   });
 });
-
 
 app.get('/membros', (req, res) => {
   db.all('SELECT * FROM membros', [], (err, rows) => {
@@ -114,7 +115,10 @@ app.get('/membros', (req, res) => {
   console.log("GET /membros");
 });
 
-app.post('/projetos', (req, res) => {
+app.post('/projetos', upload.fields([
+  { name: 'capa', maxCount: 1 },
+  { name: 'membroImages' } // várias imagens
+]), async (req, res) => {
   const token = req.cookies.SUAP_token;
   console.log("1: " + token);
 
@@ -122,58 +126,115 @@ app.post('/projetos', (req, res) => {
     return res.status(401).json({ error: 'Not authenticated' });
   }
 
-  const { titulo, data, cursos, descricao, membros, capa } = req.body;
+  try {
+    const suapRes = await axios.get('https://suap.ifsul.edu.br/api/rh/meus-dados/', {
+      headers: {
+        Authorization: 'Bearer ' + token // or however you're storing the token
+      }
+    });
 
-  db.serialize(() => {
-    db.run('BEGIN TRANSACTION');
+    if(!allowedUserRoles.includes(suapRes.data.vinculo.categoria)){
+      console.log("Não autorizado.")
+      return res.status(401).send("Não autorizado.")
+    }
+        
+    const { titulo, data, cursos, descricao, membros } = req.body;
+    const capaPath = req.files['capa']?.[0]?.path.slice(8);
 
-    db.run(
-      `INSERT INTO projetos (titulo, data, cursos, descricao, capa) VALUES (?, ?, ?, ?, ?)`,
-      [titulo, data, cursos, descricao, capa],
-      function (err) {
-        if (err) {
-          db.run('ROLLBACK');
-          console.log(err);
-          return res.status(500).send('Error inserting event');
-        }
+    const membrosArray = JSON.parse(membros); // [{ nome, titulos }]
+    const imagensMembros = req.files['membroImages'] || [];
 
-        const projetoId = this.lastID;
+    console.log(membros);
 
-        const stmt = db.prepare(
-          `INSERT INTO membros (projeto_id, nome, titulos, image) VALUES (?, ?, ?, ?)`
-        );
+    db.serialize(() => {
+      db.run('BEGIN TRANSACTION');
 
-        for (const membro of membros) {
-          stmt.run([projetoId, membro.nome, membro.titulos, membro.image], (err) => {
-            if (err) {
-              db.run('ROLLBACK');
-              console.log(err);
-              return res.status(500).send('Error inserting speaker');
-            }
-          });
-        }
-
-        stmt.finalize((err) => {
+      db.run(
+        `INSERT INTO projetos (titulo, data, cursos, descricao, capa) VALUES (?, ?, ?, ?, ?)`,
+        [titulo, data, cursos, descricao, capaPath],
+        function (err) {
           if (err) {
             db.run('ROLLBACK');
-            console.log(err);
-            return res.status(500).send('Error finalizing speakers');
+            console.error(err);
+            return res.status(500).send('Erro ao inserir projeto');
           }
 
-          db.run('COMMIT');
-          res.status(201).send('Projeto e membros inseridos com sucesso');
-        });
-      }
-    );
-  });
+          const projetoId = this.lastID;
+
+          const stmt = db.prepare(
+            `INSERT INTO membros (projeto_id, nome, titulos, image) VALUES (?, ?, ?, ?)`
+          );
+
+          membrosArray.forEach((membro, index) => {
+            const imgPath = imagensMembros[index]?.path.slice(8) || null;
+
+            stmt.run([projetoId, membro.nome, membro.titulos, imgPath], (err) => {
+              if (err) {
+                db.run('ROLLBACK');
+                console.error(err);
+                return res.status(500).send('Erro ao inserir membro');
+              }
+            });
+          });
+
+          stmt.finalize((err) => {
+            if (err) {
+              db.run('ROLLBACK');
+              console.error(err);
+              return res.status(500).send('Erro ao finalizar membros');
+            }
+
+            db.run('COMMIT');
+            res.status(201).send('Projeto e membros inseridos com sucesso');
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Erro interno no servidor');
+  }
 });
+
+app.delete('/projetos/:id', async (req, res) => {
+  const token = req.cookies.SUAP_token;
+  console.log("4: " + token);
+  if (!token) {
+    return res.status(401).json({ error: 'Not authenticated' });
+  }
+
+  try {
+    const suapRes = await axios.get('https://suap.ifsul.edu.br/api/rh/meus-dados/', {
+      headers: {
+        Authorization: 'Bearer ' + token // or however you're storing the token
+      }
+    });
+
+    if(!allowedUserRoles.includes(suapRes.data.vinculo.categoria)){
+      console.log("Não autorizado.")
+      return res.status(401).send("Não autorizado.")
+    }
+
+    db.run(`DELETE FROM projetos WHERE id = ?`, [req.params.id], (err)=>{
+      if(err){
+        console.log(err);
+        return res.status(500).send("Error: " + err);
+      }
+      res.send("Projeto removido.")
+    })
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Erro interno no servidor');
+  }
+})
 
 app.get('/meus-dados', async (req, res) => {
   const token = req.cookies.SUAP_token;
   console.log("2: " + token);
 
   if (!token) {
-    return res.status(401).json({ error: 'Not authenticated'});
+    return res.status(401).json({ error: 'Not authenticated' });
   }
 
   try {

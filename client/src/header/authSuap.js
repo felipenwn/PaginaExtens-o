@@ -1,9 +1,12 @@
+// client/src/header/authSuap.js
+
+// Usando o objeto 'window' para garantir que a variável seja global
+window.currentUserRole = null; 
+
 function redirectToSuapLogin(authHost, clientID, redirectURI, scope) {
-    // Ensure parameters are URL-encoded
     const encodedRedirectURI = encodeURIComponent(redirectURI);
     const encodedScope = encodeURIComponent(scope);
 
-    // Construct the login URL securely
     const loginUrl = `${authHost.replace(/\/$/, '')}/o/authorize/` +
         `?response_type=token` +
         `&client_id=${clientID}` +
@@ -11,13 +14,12 @@ function redirectToSuapLogin(authHost, clientID, redirectURI, scope) {
         `&scope=${encodedScope}` +
         `&grant_type=implicit`;
 
-    // Redirect the browser to the login URL (HTTPS expected)
     window.location.href = loginUrl;
 }
 
 function getTokenFromUrl() {
-    const hash = window.location.hash; // e.g. #access_token=xyz&token_type=Bearer&expires_in=3600
-    const params = new URLSearchParams(hash.substring(1)); // skip the '#'
+    const hash = window.location.hash;
+    const params = new URLSearchParams(hash.substring(1));
     return params.get('access_token');
 }
 
@@ -37,71 +39,74 @@ async function saveToken(token) {
     }
 }
 
-function removeToken(){
+function removeToken() {
     fetch('https://localhost:3000/remove-token', {
-    method: 'POST',
-    credentials: 'include'
-  })
+        method: 'POST',
+        credentials: 'include'
+    })
     .then(res => {
-      if (res.ok) {
-        console.log('Token removed');
-        // Optional: reset UI or redirect
-        window.location.reload();
-      } else {
-        console.error('Failed to remove token');
-      }
+        if (res.ok) {
+            console.log('Token removed');
+            window.location.reload();
+        } else {
+            console.error('Failed to remove token');
+        }
     })
     .catch(err => {
-      console.error('Error removing token:', err);
+        console.error('Error removing token:', err);
     });
-} 
+}
 
 function getUserData() {
     fetch('https://localhost:3000/meus-dados/', {
         credentials: 'include'
     })
-        .then(res => res.json())
-        .then(data => {
-            console.log("aqui: " + data)
-            if(data.nome_usual == undefined)
-                return;
-            const userName = document.getElementById('user-name');
-            const userImage = document.getElementById('user-image');
+    .then(res => res.json())
+    .then(data => {
+        if (!data || data.error) {
+            console.log("Usuário não autenticado ou erro na resposta da API.");
+            window.currentUserRole = null; // Garante que a role seja nula se não houver usuário
+            return;
+        }
+        
+        // ---- ALTERAÇÃO PRINCIPAL AQUI ----
+        // Salva a permissão na variável global 'window'
+        window.currentUserRole = data.vinculo.categoria; 
+        
+        const userName = document.getElementById('user-name');
+        const userImage = document.getElementById('user-image');
+        
+        if (userName && userImage) {
             userName.textContent = data.nome_usual;
             userName.classList.remove('d-none');
             userImage.src = data.url_foto_75x100;
             userImage.parentElement.classList.remove('d-none');
-
             document.getElementById('actions').classList.remove('d-none');
-
-            // Hide login button
-            document.getElementById('login-btn').classList = 'd-none';
-        })
-
+            document.getElementById('login-btn').classList.add('d-none');
+        }
+    })
+    .catch(err => {
+        console.error("Erro ao buscar dados do usuário:", err);
+        window.currentUserRole = null; // Limpa a role em caso de erro
+    });
 }
 
 function redirectVars() {
     redirectToSuapLogin(
-        'https://suap.ifsul.edu.br',  // your authHost, HTTPS enforced
+        'https://suap.ifsul.edu.br',
         '4709NRzgE2vNxYBgKgZ5xoQGFhMkiVFLhCyWUTuv',
         'https://127.0.0.1:5500/client/src/extensao/',
         'identificacao email'
     );
-
 }
 
-// On page load or after redirect:
+// Lógica de inicialização que roda assim que o script é carregado
 (async () => {
     let token = getTokenFromUrl();
     if (token) {
         await saveToken(token);
-        getUserData();
-        console.log('Token saved:', token);
-    } else {
-        try {      
-            getUserData();      
-        } catch (error) {
-            console.error("User not authenticated or error fetching data:", error);
-        }
     }
+    // Sempre tenta buscar os dados do usuário, mesmo que não haja token na URL
+    // (o token pode já estar no cookie do servidor)
+    getUserData();
 })();
