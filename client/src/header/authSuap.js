@@ -25,7 +25,7 @@ function getTokenFromUrl() {
 
 async function saveToken(token) {
     if (token) {
-        await fetch('https://localhost:3000/save-token', {
+        await fetch('https://localhost:5500/save-token', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -40,7 +40,7 @@ async function saveToken(token) {
 }
 
 function removeToken() {
-    fetch('https://localhost:3000/remove-token', {
+    fetch('https://localhost:5500/remove-token', {
         method: 'POST',
         credentials: 'include'
     })
@@ -58,19 +58,18 @@ function removeToken() {
 }
 
 function getUserData() {
-    fetch('https://localhost:3000/meus-dados/', {
+    return fetch('https://localhost:5500/meus-dados/', {
         credentials: 'include'
     })
     .then(res => res.json())
     .then(data => {
         if (!data || data.error) {
             console.log("Usuário não autenticado ou erro na resposta da API.");
-            window.currentUserRole = null; // Garante que a role seja nula se não houver usuário
+            window.currentUserRole = null; 
             return;
         }
         
-        // ---- ALTERAÇÃO PRINCIPAL AQUI ----
-        // Salva a permissão na variável global 'window'
+
         window.currentUserRole = data.vinculo.categoria; 
         
         const userName = document.getElementById('user-name');
@@ -87,7 +86,7 @@ function getUserData() {
     })
     .catch(err => {
         console.error("Erro ao buscar dados do usuário:", err);
-        window.currentUserRole = null; // Limpa a role em caso de erro
+        window.currentUserRole = null; 
     });
 }
 
@@ -100,13 +99,12 @@ function redirectVars() {
     );
 }
 
-// Lógica de inicialização que roda assim que o script é carregado
+
 (async () => {
     let token = getTokenFromUrl();
     if (token) {
         await saveToken(token);
     }
-    // Sempre tenta buscar os dados do usuário, mesmo que não haja token na URL
-    // (o token pode já estar no cookie do servidor)
+
     getUserData();
 })();

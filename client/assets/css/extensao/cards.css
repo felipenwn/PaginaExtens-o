@@ -1,0 +1,113 @@
+/* Cards de extensão */
+.event-card.custom-card {
+    width: 350px;         /* largura fixa */
+    min-width: 980px;
+    max-width: 100%;
+    height: 420px;        /* altura fixa */
+    max-height: 420px;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    margin: 16px auto;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.custom-card-img {
+    width: 60%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.card-body{
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.event-title, .event-description, .event-courses {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.event-title{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    color: var(--verde1);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.event-description span {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;  /* Limita a 3 linhas */
+    line-clamp: 3;           
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* Botão X do card */
+.btn-x {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    padding: 2px 8px;
+    font-size: 1rem;
+}
+.speakers-container.carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+/* Centraliza as setas horizontalmente sobre o carrossel */
+.custom-crsl-btn {
+    position: absolute;
+    top: 50%;
+    background: #fff;
+    border: none;
+    z-index: 2;
+    padding: 4px 8px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    color: #333;
+}
+.custom-crsl-btn.left {
+    left: 32px;
+}
+.custom-crsl-btn {
+    right: 4px;
+}
+
+
+/* Modal de descrição do projeto */
+.modal .modal-title {
+    font-weight: bold;
+}
+
+.modal .modal-body {
+    font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+    .event-card.custom-card {
+        width: 98vw;
+        min-width: unset;
+        height: auto;
+        flex-direction: column;
+    }
+    .custom-card-img {
+        width: 100%;
+        height: 180px;
+        border-radius: 16px 16px 0 0;
+    }
+    .card-body {
+    display: block
+
+}
+}

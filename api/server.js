@@ -10,8 +10,18 @@ import qs from 'qs';
 import path from 'path';
 
 const app = express();
-const PORT = 3000;
-const allowedOrigins = ['https://127.0.0.1:5500', 'http://127.0.0.1:5500','http://127.0.0.1:5501' , 'https://localhost:5501, https://localhost:3000', 'http://localhost:3000'];
+
+const PORT = 3001;
+const allowedOrigins = [
+  'https://127.0.0.1:5500',
+  'http://127.0.0.1:5500',
+  '127.0.0.1:5500',
+  'http://127.0.0.1:3001',
+  'https://127.0.0.1:3001',
+  'http://127.0.0.1:3000',
+  'https://127.0.0.1:3000',
+   
+];
 const allowedUserRoles = "docente estagiario"
 
 const options = {
@@ -313,6 +323,6 @@ function convertToISO(ddmmyyyy) {
   return `${yyyy}-${mm}-${dd}`; // Converts to ISO: yyyy-MM-dd
 }
 
-https.createServer(options, app).listen(3000, () => {
-  console.log('HTTPS server running at https://localhost:3000');
+https.createServer(options, app).listen(5500, () => {
+  console.log('HTTPS server running at https://localhost:5500');
 });
