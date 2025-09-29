@@ -1,12 +1,14 @@
 
 let scheduleData = [];
-const rolesPermitidos = ["docente", "estagiario"];
+const rolesPermitidos = ["docente", "estagiario","Aluno"];
+
+
 
 function createSpeakersSection(membros) {
     return membros.map((membro, index) => `
         <div class="carousel-item${index === 0 ? ' active' : ''}">
         <div class="speaker">
-            <img src="https://localhost:5500/uploads/${membro.image}" class="speaker-image">
+            <img src="${API_BASE_URL}/uploads/${membro.image}" class="speaker-image">
             <div class="speaker-info">
                 <h4>${membro.nome}</h4>
                 ${membro.titulos ? `
@@ -21,7 +23,7 @@ function createSpeakersSection(membros) {
 }
 
 async function fetchProjetos() {
-    const response = await fetch("https://localhost:5500/projetos", {
+        const response = await fetch(`${API_BASE_URL}/projetos`, {
         method: 'GET',
         credentials: 'include'
     });
@@ -31,7 +33,7 @@ async function fetchProjetos() {
 
 function removeProjeto(id) {
     if (confirm('Tem certeza que deseja remover este projeto?')) {
-        fetch("https://localhost:5500/projetos/" + id, {
+        fetch(`${API_BASE_URL}/projetos/` + id, {
             method: 'DELETE',
             credentials: 'include'
         }).then(response => {
@@ -85,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const uniqueId = `projeto-${event.id}`;
         return `
         <div class="card event-card d-flex flex-row custom-card">
-            <img class="card-img custom-card-img" src="https://localhost:5500/uploads/${event.capa}";>
+            <img class="card-img custom-card-img" src="${API_BASE_URL}/uploads/${event.capa}";>
             <div class="card-body">
                 <h3 class="event-title">${event.titulo}</h3>
                 <div class="event-date">

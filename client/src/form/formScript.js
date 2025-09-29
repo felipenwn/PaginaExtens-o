@@ -65,11 +65,13 @@ function submitProjetoForm(event) {
     formData.append('capa', capaFile);
     formData.append('membros', JSON.stringify(membrosArray));
     membrosImages.forEach(img => {
-        formData.append('membroImages', img);
+        if (img) { // Adicionado para não enviar "undefined" se a imagem for opcional
+            formData.append('membroImages', img);
+        }
     });
 
     // Enviar
-    fetch('https://localhost:5500/projetos', {
+    fetch(`${API_BASE_URL}/projetos`, {
         method: 'POST',
         credentials: 'include',
         body: formData
@@ -81,7 +83,8 @@ function submitProjetoForm(event) {
         .then(data => {
             alert('Projeto enviado com sucesso!');
             console.log(data);
-            window.location.href = "https://localhost:5500/client/src/extensao/index.html"
+            window.location.href = '/client/src/extensao/index.html';
+
         })
         .catch(err => {
             console.error(err);
