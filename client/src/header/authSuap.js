@@ -25,7 +25,7 @@ function getTokenFromUrl() {
 
 async function saveToken(token) {
     if (token) {
-        await fetch(`${API_BASE_URL}/save-token`, {
+        await fetch('https://localhost:5500/save-token', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -40,7 +40,7 @@ async function saveToken(token) {
 }
 
 function removeToken() {
-    fetch(`${API_BASE_URL}/remove-token`, {
+    fetch('https://localhost:5500/remove-token', {
         method: 'POST',
         credentials: 'include'
     })
@@ -58,7 +58,7 @@ function removeToken() {
 }
 
 function getUserData() {
-    return fetch(`${API_BASE_URL}/meus-dados/`, {
+    return fetch('https://localhost:5500/meus-dados/', {
         credentials: 'include'
     })
     .then(res => res.json())
@@ -91,13 +91,11 @@ function getUserData() {
 }
 
 function redirectVars() {
-    // A variável é declarada aqui, consertando o erro
     const correctRedirectUri = 'http://127.0.0.1:3000/PaginaExtens-o/client/src/extensao/index.html';
-
     redirectToSuapLogin(
         'https://suap.ifsul.edu.br',
-        'aq0Ftd6lhzIulKumRH14a2MrmLBC2hAEFB9GaGPM', // Lembre-se de colocar seu client_id real
-        correctRedirectUri,
+        'aq0Ftd6lhzIulKumRH14a2MrmLBC2hAEFB9GaGPM', 
+        correctRedirectUri, 
         'identificacao email'
     );
 }
