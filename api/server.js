@@ -11,7 +11,7 @@ import path from 'path';
 
 const app = express();
 const PORT = 3000;
-const allowedOrigins = ['https://127.0.0.1:5500', 'http://127.0.0.1:5500']
+const allowedOrigins = ['https://127.0.0.1:5500', 'http://127.0.0.1:5500','http://127.0.0.1:5501' , 'https://localhost:5501, https://localhost:3000', 'http://localhost:3000'];
 const allowedUserRoles = "docente estagiario"
 
 const options = {
