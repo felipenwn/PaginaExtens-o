@@ -11,7 +11,7 @@ import path from 'path';
 
 const app = express();
 
-const PORT = 3001;
+const PORT = 5500;
 const allowedOrigins = [
   'https://127.0.0.1:5500',
   'http://127.0.0.1:5500',
