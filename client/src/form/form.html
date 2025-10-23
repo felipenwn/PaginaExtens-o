@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="https://localhost:3000/uploads/favicon.ico" />
+  <link rel="icon" href="https://localhost:5500/uploads/favicon.ico" />
   <title>Projetos de extensão</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap"
     rel="stylesheet" />
@@ -61,10 +61,17 @@
         </div>
       </div>
       
-
       <div class="mb-3">
         <label for="descricao" class="form-label">Descrição</label>
         <textarea class="form-control" name="descricao" id="descricao" rows="4" placeholder="Insira o objetivo do projeto, os métodos, o local e outras informações relevantes de maneira breve"></textarea>
+      </div>
+
+      <hr />
+      <h3>Galeria de Fotos</h3>
+      <div class="mb-3">
+        <label for="galeria" class="form-label">Fotos do Projeto (Opcional)</label>
+        <input type="file" class="form-control" name="galeria" id="galeria" accept="image/*" multiple />
+        <small class="form-text text-muted">Selecione uma ou mais fotos para a galeria do projeto</small>
       </div>
 
       <hr />

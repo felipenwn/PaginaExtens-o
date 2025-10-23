@@ -70,8 +70,8 @@
 /* Botão X do card */
 .btn-x {
     position: absolute;
-    top: -9px;
-    right: -9px;
+    top: 1px;
+    right: 1px;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -81,8 +81,8 @@
 }
 .btn-edit{
     position: absolute;
-    top: -25px;
-    right: 35px;
+    top: 2px;
+    right: 2px;
     width: 30px;
     height: 30px;
 }
