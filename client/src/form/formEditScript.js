@@ -84,6 +84,17 @@ function removerFotoGaleria(foto, index) {
     }
 }
 
+function handleResponsavelChange(checkbox) {
+    if (checkbox.checked) {
+        // Desmarca todos os outros checkboxes de responsável
+        document.querySelectorAll('.membro-responsavel').forEach(cb => {
+            if (cb !== checkbox) {
+                cb.checked = false;
+            }
+        });
+    }
+}
+
 function addMembro() {
     const container = document.getElementById("membros-container");
 
@@ -94,15 +105,42 @@ function addMembro() {
           <label class="form-label">Nome do Membro</label>
           <input type="text" class="form-control membro-nome" name="membros[${membroCount}][nome]" required>
         </div>
+        
         <div class="mb-3">
-          <label class="form-label">Títulos</label>
-          <input type="text" class="form-control membro-titulos" name="membros[${membroCount}][titulos]" placeholder="Membro, estudante, organizador, parceiro, etc.">
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-control membro-email" name="membros[${membroCount}][email]" placeholder="exemplo@ifsul.edu.br" required>
+        </div>
+        
+        <div class="mb-3">
+          <label class="form-label">Função no Projeto</label>
+          <select class="form-select membro-titulos" name="membros[${membroCount}][titulos]" required>
+            <option value="">Selecione...</option>
+            <option value="Professor Orientador">Professor Orientador</option>
+            <option value="Professor Colaborador">Professor Colaborador</option>
+            <option value="Coordenador">Coordenador</option>
+            <option value="Estudante Bolsista">Estudante Bolsista</option>
+            <option value="Estudante Voluntário">Estudante Voluntário</option>
+            <option value="Pesquisador">Pesquisador</option>
+            <option value="Técnico Administrativo">Técnico Administrativo</option>
+            <option value="Parceiro Externo">Parceiro Externo</option>
+            <option value="Colaborador">Colaborador</option>
+          </select>
           <small class="form-text text-muted">A função do membro no projeto.</small>
         </div>
+        
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input membro-responsavel" name="membros[${membroCount}][responsavel]" onchange="handleResponsavelChange(this)">
+          <label class="form-check-label">
+            <strong>Responsável pelo projeto</strong>
+          </label>
+          <small class="form-text text-muted d-block">Marque se este membro é o professor/coordenador responsável.</small>
+        </div>
+        
         <div class="mb-3">
           <label class="form-label">Foto</label>
           <input type="file" class="form-control membro-image" name="membros[${membroCount}][image]" accept="image/*">
         </div>
+        
         <button type="button" class="btn btn-sm btn-outline-danger" onclick="this.parentElement.remove()">Remover</button>
       `;
 
@@ -124,11 +162,37 @@ function addMembroExistente(membro, index) {
           <label class="form-label">Nome do Membro</label>
           <input type="text" class="form-control membro-nome" name="membros[${membroCount}][nome]" value="${membro.nome}" required>
         </div>
+        
         <div class="mb-3">
-          <label class="form-label">Títulos</label>
-          <input type="text" class="form-control membro-titulos" name="membros[${membroCount}][titulos]" value="${membro.titulos || ''}" placeholder="Membro, estudante, organizador, parceiro, etc.">
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-control membro-email" name="membros[${membroCount}][email]" value="${membro.email || ''}" placeholder="exemplo@ifsul.edu.br" required>
+        </div>
+        
+        <div class="mb-3">
+          <label class="form-label">Função no Projeto</label>
+          <select class="form-select membro-titulos" name="membros[${membroCount}][titulos]" required>
+            <option value="">Selecione...</option>
+            <option value="Professor Orientador" ${membro.titulos === 'Professor Orientador' ? 'selected' : ''}>Professor Orientador</option>
+            <option value="Professor Colaborador" ${membro.titulos === 'Professor Colaborador' ? 'selected' : ''}>Professor Colaborador</option>
+            <option value="Coordenador" ${membro.titulos === 'Coordenador' ? 'selected' : ''}>Coordenador</option>
+            <option value="Estudante Bolsista" ${membro.titulos === 'Estudante Bolsista' ? 'selected' : ''}>Estudante Bolsista</option>
+            <option value="Estudante Voluntário" ${membro.titulos === 'Estudante Voluntário' ? 'selected' : ''}>Estudante Voluntário</option>
+            <option value="Pesquisador" ${membro.titulos === 'Pesquisador' ? 'selected' : ''}>Pesquisador</option>
+            <option value="Técnico Administrativo" ${membro.titulos === 'Técnico Administrativo' ? 'selected' : ''}>Técnico Administrativo</option>
+            <option value="Parceiro Externo" ${membro.titulos === 'Parceiro Externo' ? 'selected' : ''}>Parceiro Externo</option>
+            <option value="Colaborador" ${membro.titulos === 'Colaborador' ? 'selected' : ''}>Colaborador</option>
+          </select>
           <small class="form-text text-muted">A função do membro no projeto.</small>
         </div>
+        
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input membro-responsavel" name="membros[${membroCount}][responsavel]" ${membro.responsavel ? 'checked' : ''} onchange="handleResponsavelChange(this)">
+          <label class="form-check-label">
+            <strong>Responsável pelo projeto</strong>
+          </label>
+          <small class="form-text text-muted d-block">Marque se este membro é o professor/coordenador responsável.</small>
+        </div>
+        
         <div class="mb-3">
           <label class="form-label">Foto</label>
           <div class="mb-2">
@@ -137,6 +201,7 @@ function addMembroExistente(membro, index) {
           <input type="file" class="form-control membro-image" name="membros[${membroCount}][image]" accept="image/*">
           <small class="form-text text-muted">Deixe em branco para manter a foto atual</small>
         </div>
+        
         <button type="button" class="btn btn-sm btn-outline-danger" onclick="this.parentElement.remove()">Remover</button>
       `;
 
@@ -168,16 +233,25 @@ async function submitEditarProjetoForm(event) {
     const membrosArray = [];
     const membrosImagesNovas = [];
     const membrosImagesAntigas = [];
+    let temResponsavel = false;
 
     document.querySelectorAll('.membro-grupo').forEach((membroDiv) => {
         const nome = membroDiv.querySelector('.membro-nome').value;
+        const email = membroDiv.querySelector('.membro-email').value;
         const titulos = membroDiv.querySelector('.membro-titulos').value;
+        const responsavel = membroDiv.querySelector('.membro-responsavel').checked;
         const imageFile = membroDiv.querySelector('.membro-image').files[0];
         const imageAtual = membroDiv.querySelector('.membro-image-atual')?.value;
 
+        if (responsavel) {
+            temResponsavel = true;
+        }
+
         membrosArray.push({ 
             nome, 
+            email,
             titulos,
+            responsavel: responsavel ? true : false,
             imageAtual: imageAtual || null
         });
         
@@ -193,6 +267,12 @@ async function submitEditarProjetoForm(event) {
             membrosImagesAntigas.push(null);
         }
     });
+
+    // Validação: verificar se há pelo menos um responsável
+    if (!temResponsavel) {
+        alert('Por favor, marque pelo menos um membro como responsável pelo projeto.');
+        return;
+    }
 
     // FormData
     const formData = new FormData();

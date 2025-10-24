@@ -8,6 +8,9 @@ import axios from 'axios';
 import cookieParser from "cookie-parser";
 import qs from 'qs';
 import path from 'path';
+import nodemailer from 'nodemailer';
+import 'dotenv/config'; 
+
 
 const app = express();
 
@@ -27,6 +30,36 @@ const options = {
   key: fs.readFileSync('./cert/key.pem'),
   cert: fs.readFileSync('./cert/cert.pem')
 };
+
+const transporter = nodemailer.createTransport({
+  host: process.env.EMAIL_HOST, // Ex: 'smtp.ifsul.edu.br'
+  port: process.env.EMAIL_PORT || 465,
+  secure: true, // true para 465, false para outras portas
+  auth: {
+    user: process.env.EMAIL_USER, // 'seu-email@ifsul.edu.br'
+    pass: process.env.EMAIL_PASS  // 'sua-senha'
+  }
+});
+
+// FUNÇÃO PARA ENVIAR O E-MAIL (ITEM 2)
+async function enviarSolicitacaoParticipacao(dados) {
+  const mailOptions = {
+    from: '"Sistema de Projetos" <noreply@ifsul.edu.br>',
+    to: dados.responsavelEmail,
+    subject: `Nova Solicitação - ${dados.projetoTitulo}`,
+    html: `
+      <h2>Nova Solicitação de Participação</h2>
+      <p><strong>Projeto:</strong> ${dados.projetoTitulo}</p>
+      <p><strong>Nome:</strong> ${dados.nomeInteressado}</p>
+      <p><strong>E-mail:</strong> ${dados.emailInteressado}</p>
+      <p><strong>Mensagem:</strong></p>
+      <p>${dados.mensagem}</p>
+      <hr>
+      <p><small>Para responder, envie um e-mail para: ${dados.emailInteressado}</small></p>
+    `
+  };
+  return transporter.sendMail(mailOptions);
+}
 
 app.use(express.json());
 app.use(cors({
@@ -121,14 +154,18 @@ const checkSuapAuth = async (req, res, next) => {
 // Adicionada a coluna 'galeria'
 app.get('/projetos', (req, res) => {
   const query = `
-      SELECT 
-        e.id as projeto_id,
-        e.titulo, e.data, e.cursos, e.descricao, e.capa,
-        e.galeria, -- NOVO
-        s.nome AS membro_nome, s.titulos AS membro_titulos, s.image AS membro_image 
-      FROM projetos e
-      LEFT JOIN membros s ON e.id = s.projeto_id
-      ORDER BY e.id DESC
+SELECT 
+      e.id as projeto_id,
+      e.titulo, e.data, e.cursos, e.descricao, e.capa,
+      e.galeria,
+      s.nome AS membro_nome, 
+      s.titulos AS membro_titulos, 
+      s.image AS membro_image,
+      s.email AS membro_email,         -- NOVO
+      s.responsavel AS membro_responsavel -- NOVO
+    FROM projetos e
+    LEFT JOIN membros s ON e.id = s.projeto_id
+    ORDER BY e.id DESC
     `;
 
   db.all(query, [], (err, rows) => {
@@ -154,8 +191,10 @@ app.get('/projetos', (req, res) => {
       if (row.membro_nome) {
         eventsMap[row.projeto_id].membros.push({
           nome: row.membro_nome,
+          email: row.membro_email,               // NOVO
           image: row.membro_image,
-          titulos: row.membro_titulos
+          titulos: row.membro_titulos,
+          responsavel: !!row.membro_responsavel  // NOVO e convertido para booleano
         });
       }
     });
@@ -168,33 +207,45 @@ app.get('/projetos', (req, res) => {
 // --- GET /projetos/:id (MODIFICADO) ---
 // Adicionado o campo 'galeria'
 app.get('/projetos/:id', (req, res) => {
-    const { id } = req.params;
-  
-    const queryProjeto = `SELECT * FROM projetos WHERE id = ?`;
-    
-    db.get(queryProjeto, [id], (err, projeto) => {
+  const { id } = req.params;
+
+  const queryProjeto = `SELECT * FROM projetos WHERE id = ?`;
+
+  db.get(queryProjeto, [id], (err, projeto) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    if (!projeto) {
+      return res.status(404).json({ error: 'Projeto não encontrado' });
+    }
+
+    projeto.galeria = JSON.parse(projeto.galeria || '[]');
+
+    // ================== AQUI ESTÁ A MUDANÇA ==================
+    const queryMembros = `
+      SELECT nome, email, titulos, responsavel, image 
+      FROM membros 
+      WHERE projeto_id = ?
+    `;
+    // =========================================================
+
+    db.all(queryMembros, [id], (err, membros) => {
       if (err) {
         console.error(err.message);
-        return res.status(500).json({ error: 'Database error' });
-      }
-      if (!projeto) {
-        return res.status(404).json({ error: 'Projeto não encontrado' });
+        return res.status(500).json({ error: 'Database error fetching members' });
       }
       
-      // MODIFICADO: Transforma a string JSON da galeria em um array
-      projeto.galeria = JSON.parse(projeto.galeria || '[]');
+      // Converte o valor de 'responsavel' para booleano
+      projeto.membros = membros.map(m => ({
+        ...m,
+        responsavel: !!m.responsavel 
+      })) || [];
 
-      const queryMembros = `SELECT nome, titulos, image FROM membros WHERE projeto_id = ?`;
-      db.all(queryMembros, [id], (err, membros) => {
-        if (err) {
-          console.error(err.message);
-          return res.status(500).json({ error: 'Database error fetching members' });
-        }
-        projeto.membros = membros || [];
-        res.json(projeto);
-      });
+      res.json(projeto);
     });
   });
+});
 
 // --- POST /projetos (MODIFICADO) ---
 // Adiciona suporte ao upload da galeria
@@ -215,6 +266,14 @@ app.post('/projetos', checkSuapAuth, upload.fields([
   const galeriaFilenames = galeriaFiles.map(file => file.filename);
   const galeriaJSON = JSON.stringify(galeriaFilenames); // Salva como string JSON
 
+  const responsaveis = membrosArray.filter(m => m.responsavel === true);
+  if (responsaveis.length === 0) {
+    return res.status(400).json({ error: 'Projeto deve ter pelo menos um responsável' });
+  }
+  if (responsaveis.length > 1) {
+    return res.status(400).json({ error: 'Projeto pode ter apenas um responsável' });
+  }
+
   db.serialize(() => {
     db.run('BEGIN TRANSACTION');
 
@@ -234,10 +293,14 @@ app.post('/projetos', checkSuapAuth, upload.fields([
           return res.status(201).send('Projeto inserido com sucesso');
         }
 
-        const stmt = db.prepare(`INSERT INTO membros (projeto_id, nome, titulos, image) VALUES (?, ?, ?, ?)`);
+        const stmt = db.prepare(`
+          INSERT INTO membros (projeto_id, nome, email, titulos, responsavel, image) 
+          VALUES (?, ?, ?, ?, ?, ?)
+        `);
         membrosArray.forEach((membro, index) => {
           const imgFilename = imagensMembros[index]?.filename || null;
-          stmt.run([projetoId, membro.nome, membro.titulos, imgFilename]);
+          // Adiciona os novos campos na inserção
+          stmt.run([projetoId, membro.nome, membro.email, membro.titulos, membro.responsavel, imgFilename]);
         });
 
         stmt.finalize((err) => {
@@ -251,6 +314,26 @@ app.post('/projetos', checkSuapAuth, upload.fields([
       }
     );
   });
+});
+
+app.post('/projetos/solicitar-participacao', async (req, res) => {
+  try {
+    const { projetoTitulo, responsavelEmail, nomeInteressado, emailInteressado, mensagem } = req.body;
+
+    if (!projetoTitulo || !responsavelEmail || !nomeInteressado || !emailInteressado || !mensagem) {
+      return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
+    }
+
+    await enviarSolicitacaoParticipacao(req.body);
+
+    // Opcional: logSolicitacao não foi definido, então comentei ou remova
+    // await logSolicitacao(...); 
+
+    res.json({ success: true, message: 'Solicitação enviada com sucesso' });
+  } catch (error) {
+    console.error('Erro ao enviar solicitação:', error);
+    res.status(500).json({ error: 'Erro interno ao processar a solicitação de e-mail' });
+  }
 });
 
 
@@ -272,6 +355,14 @@ app.put('/projetos/:id', checkSuapAuth, upload.fields([
         galeriaParaRemover = JSON.parse(fotosGaleriaRemover || '[]');
     } catch (e) {
         return res.status(400).json({ error: "JSON inválido para membros ou galeria a remover." });
+    }
+
+    const responsaveis = membrosArray.filter(m => m.responsavel === true);
+    if (responsaveis.length === 0) {
+      return res.status(400).json({ error: 'Projeto deve ter pelo menos um responsável' });
+    }
+    if (responsaveis.length > 1) {
+      return res.status(400).json({ error: 'Projeto pode ter apenas um responsável' });
     }
 
     const capaFile = req.files['capa']?.[0];
@@ -303,7 +394,9 @@ app.put('/projetos/:id', checkSuapAuth, upload.fields([
                 db.run('DELETE FROM membros WHERE projeto_id = ?', [id], (err) => {
                     if (err) { db.run('ROLLBACK'); return res.status(500).send('Erro ao limpar membros antigos'); }
                     
-                    const stmt = db.prepare(`INSERT INTO membros (projeto_id, nome, titulos, image) VALUES (?, ?, ?, ?)`);
+                    const stmt = db.prepare(`INSERT INTO membros (projeto_id, nome, email, titulos, responsavel, image) 
+                    VALUES (?, ?, ?, ?, ?, ?)
+                    `);
                     let newImageIndex = 0;
                     membrosArray.forEach(membro => {
                         // Se o membro já tinha imagem, usa ela. Senão, pega uma da lista de novas imagens.
@@ -311,7 +404,7 @@ app.put('/projetos/:id', checkSuapAuth, upload.fields([
                         if (!membro.image && novasImagensMembros[newImageIndex]) {
                             newImageIndex++;
                         }
-                        stmt.run([id, membro.nome, membro.titulos, imagemFinal]);
+                        stmt.run([id, membro.nome, membro.email, membro.titulos, membro.responsavel, imagemFinal]);
                     });
 
                     stmt.finalize((err) => {

@@ -18,9 +18,53 @@ async function fetchProjetoDetalhes(id) {
     return await response.json();
 }
 
+function getResponsavel(membros) {
+    return membros.find(membro => membro.responsavel === true);
+}
+
+function enviarSolicitacao(event, responsavelEmail, projetoTitulo) {
+    event.preventDefault();
+    
+    const nomeInteressado = document.getElementById('nome-interessado').value;
+    const emailInteressado = document.getElementById('email-interessado').value;
+    const mensagem = document.getElementById('mensagem-interessado').value;
+    
+    // Preparar dados para enviar ao backend
+    const dados = {
+        projetoTitulo: projetoTitulo,
+        responsavelEmail: responsavelEmail,
+        nomeInteressado: nomeInteressado,
+        emailInteressado: emailInteressado,
+        mensagem: mensagem
+    };
+    
+    // Enviar solicitação
+    fetch(`${API_BASE_URL}/projetos/solicitar-participacao`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dados)
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Erro ao enviar solicitação');
+        return response.json();
+    })
+    .then(data => {
+        alert('Solicitação enviada com sucesso! O responsável pelo projeto entrará em contato.');
+        document.getElementById('form-participacao').reset();
+    })
+    .catch(err => {
+        console.error('Erro ao enviar solicitação:', err);
+        alert('Erro ao enviar solicitação. Tente novamente mais tarde.');
+    });
+}
+
 function createProjetoDetalhesHTML(projeto) {
     const canEdit = rolesPermitidos.includes(window.currentUserRole);
-    
+    const responsavel = getResponsavel(projeto.membros || []);
+
     return `
         <div class="projeto-header">
             <button class="btn btn-outline-secondary mb-3" onclick="window.history.back()">
@@ -89,6 +133,46 @@ function createProjetoDetalhesHTML(projeto) {
                                 </div>
                             </div>
                         `).join('')}
+                    </div>
+                </div>
+            ` : ''}
+
+             ${responsavel ? `
+                <div class="projeto-participacao">
+                    <h2>Interesse em Participar?</h2>
+                    <p class="text-muted">Preencha o formulário abaixo para entrar em contato com o responsável pelo projeto.</p>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="form-participacao" onsubmit="enviarSolicitacao(event, '${responsavel.email}', '${projeto.titulo}')">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="nome-interessado" class="form-label">Seu Nome *</label>
+                                        <input type="text" class="form-control" id="nome-interessado" required>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="email-interessado" class="form-label">Seu E-mail *</label>
+                                        <input type="email" class="form-control" id="email-interessado" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="mensagem-interessado" class="form-label">Mensagem *</label>
+                                    <textarea class="form-control" id="mensagem-interessado" rows="4" 
+                                              placeholder="Descreva brevemente seu interesse e como você pode contribuir com o projeto..." 
+                                              required></textarea>
+                                </div>
+                                
+                                <div class="alert alert-info">
+                                    <i class="bi bi-info-circle"></i> Sua mensagem será enviada para <strong>${responsavel.nome}</strong> (${responsavel.email})
+                                </div>
+                                
+                                <button type="submit" class="btn btn-success">
+                                    <i class="bi bi-send"></i> Enviar Solicitação
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             ` : ''}

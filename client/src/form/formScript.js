@@ -10,20 +10,58 @@ function addMembro() {
           <label class="form-label">Nome do Membro</label>
           <input type="text" class="form-control membro-nome" name="membros[${membroCount}][nome]" required>
         </div>
+        
         <div class="mb-3">
-          <label class="form-label">Títulos</label>
-          <input type="text" class="form-control membro-titulos" name="membros[${membroCount}][titulos]" placeholder="Membro, estudante, organizador, parceiro, etc.">
-          <small id="membroHelp${membroCount}" class="form-text text-muted">A função do membro no projeto.</small>
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-control membro-email" name="membros[${membroCount}][email]" placeholder="exemplo@ifsul.edu.br" required>
         </div>
+        
+        <div class="mb-3">
+          <label class="form-label">Função no Projeto</label>
+          <select class="form-select membro-titulos" name="membros[${membroCount}][titulos]" required>
+            <option value="">Selecione...</option>
+            <option value="Professor Orientador">Professor Orientador</option>
+            <option value="Professor Colaborador">Professor Colaborador</option>
+            <option value="Coordenador">Coordenador</option>
+            <option value="Estudante Bolsista">Estudante Bolsista</option>
+            <option value="Estudante Voluntário">Estudante Voluntário</option>
+            <option value="Pesquisador">Pesquisador</option>
+            <option value="Técnico Administrativo">Técnico Administrativo</option>
+            <option value="Parceiro Externo">Parceiro Externo</option>
+            <option value="Colaborador">Colaborador</option>
+          </select>
+          <small class="form-text text-muted">A função do membro no projeto.</small>
+        </div>
+        
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input membro-responsavel" name="membros[${membroCount}][responsavel]" onchange="handleResponsavelChange(this)">
+          <label class="form-check-label">
+            <strong>Responsável pelo projeto</strong>
+          </label>
+          <small class="form-text text-muted d-block">Marque se este membro é o professor/coordenador responsável que receberá solicitações de participação.</small>
+        </div>
+        
         <div class="mb-3">
           <label class="form-label">Foto (Opcional)</label>
           <input type="file" class="form-control membro-image" name="membros[${membroCount}][image]" accept="image/*">
         </div>
+        
         <button type="button" class="btn btn-sm btn-outline-danger" onclick="this.parentElement.remove()">Remover</button>
       `;
 
     container.appendChild(membroDiv);
     membroCount++;
+}
+
+function handleResponsavelChange(checkbox) {
+    if (checkbox.checked) {
+        // Desmarca todos os outros checkboxes de responsável
+        document.querySelectorAll('.membro-responsavel').forEach(cb => {
+            if (cb !== checkbox) {
+                cb.checked = false;
+            }
+        });
+    }
 }
 
 function submitProjetoForm(event) {
@@ -49,15 +87,33 @@ function submitProjetoForm(event) {
     // MEMBROS
     const membrosArray = [];
     const membrosImages = [];
+    let temResponsavel = false;
 
     document.querySelectorAll('.membro-grupo').forEach((membroDiv) => {
         const nome = membroDiv.querySelector('.membro-nome').value;
+        const email = membroDiv.querySelector('.membro-email').value;
         const titulos = membroDiv.querySelector('.membro-titulos').value;
+        const responsavel = membroDiv.querySelector('.membro-responsavel').checked;
         const imageFile = membroDiv.querySelector('.membro-image').files[0];
 
-        membrosArray.push({ nome, titulos });
+        if (responsavel) {
+            temResponsavel = true;
+        }
+
+        membrosArray.push({ 
+            nome, 
+            email,
+            titulos, 
+            responsavel: responsavel ? true : false 
+        });
         membrosImages.push(imageFile);
     });
+    
+     // Validação: verificar se há pelo menos um responsável
+    if (!temResponsavel) {
+        alert('Por favor, marque pelo menos um membro como responsável pelo projeto.');
+        return;
+    }
 
     // FormData
     const formData = new FormData();
