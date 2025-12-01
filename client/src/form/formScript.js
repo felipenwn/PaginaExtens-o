@@ -150,7 +150,7 @@ function submitProjetoForm(event) {
         })
         .then(data => {
             alert('Projeto enviado com sucesso!');
-            console.log(data);
+          
             window.location.href = '/client/src/extensao/index.html';
         })
         .catch(err => {

@@ -32,7 +32,7 @@ async function fetchProjetos() {
         credentials: 'include'
     });
     scheduleData = await response.json();
-    console.log("Fetched:", scheduleData);
+    
 }
 
 function removeProjeto(id) {
@@ -44,7 +44,7 @@ function removeProjeto(id) {
             credentials: 'include'
         }).then(response => {
             if (response.ok) {
-                console.log("DELETED");
+               
                 document.dispatchEvent(new Event('DOMContentLoaded'));
             } else {
                 alert("Falha ao remover o projeto.");
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchProjetos(),
         getUserData()
     ]).then(() => {
-        console.log("Dados de projetos e de usuário carregados. Renderizando a lista.");
+      
 
         updateEventsList([]);
 

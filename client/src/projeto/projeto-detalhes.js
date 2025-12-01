@@ -1,4 +1,4 @@
-const rolesPermitidos = ["docente", "estagiario", "Aluno"];
+const rolesPermitidos = ["docente", "estagiario"];
 
 function getProjetoIdFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);

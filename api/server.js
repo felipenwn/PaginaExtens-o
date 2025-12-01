@@ -24,7 +24,7 @@ const allowedOrigins = [
   'http://127.0.0.1:3000',
   'https://127.0.0.1:3000',
 ];
-const allowedUserRoles = ["docente", "estagiario", "Aluno"];
+const allowedUserRoles = ["docente", "estagiario" ];
 
 const options = {
   key: fs.readFileSync('./cert/key.pem'),
@@ -97,7 +97,6 @@ app.use('/uploads', express.static('uploads'));
 
 const checkSuapAuth = async (req, res, next) => {
   const token = req.cookies.SUAP_token;
-  console.log('🔍 Token recebido:', token ? token.substring(0, 20) + '...' : 'NENHUM');
   if (!token) {
     return res.status(401).json({ error: 'Não autenticado' });
   }
@@ -109,19 +108,17 @@ const checkSuapAuth = async (req, res, next) => {
       }
     });
 
-    console.log('✅ Resposta do SUAP:', suapRes.data);
     
     // Para alunos, vinculo.categoria não existe
     // Então vamos verificar se é aluno pela presença de vinculo.matricula
     const isAluno = suapRes.data.vinculo && suapRes.data.vinculo.matricula;
     const categoria = suapRes.data.vinculo?.categoria;
     
-    console.log('🔑 Categoria:', categoria);
-    console.log('🎓 É aluno?', isAluno);
+
 
     // Se não é aluno e não tem categoria permitida, bloqueia
     if (!isAluno && !allowedUserRoles.includes(categoria)) {
-      console.log("❌ Não autorizado (role).");
+
       return res.status(403).send("Não autorizado.");
     }
     // Adiciona a categoria manualmente para alunos

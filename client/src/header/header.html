@@ -6,27 +6,81 @@
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="bi bi-list"></i>
+            <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item" id="login-btn">
-                    <button class="btn btn-success" onclick="redirectVars()">Acessar com o SUAP</button>
-                </li>
-                <li class="nav-item dropdown d-none" id="actions">
-                    <a class="btn btn-success" href="../form/form.html">Adicionar
-                        Projeto
+            <ul class="navbar-nav ms-auto align-items-center">
+                 <li class="nav-item">
+                        <a class="nav-link" href="../home/home.html">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../home/home.html#sobre">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../extensao/index.html">Projetos</a>
+                    </li>
+                <!-- Link para Cadastro de Demanda -->
+                <li class="nav-item" id="nav-projetos">
+                    <a class="nav-link" href="https://extensiona.org/" target="_blank" rel="noopener">
+                        <i class="bi bi-pencil-square me-1"></i>
+                        Cadastre sua demanda
                     </a>
+                </li>
 
+                <!-- Botão de Login -->
+                <li class="nav-item" id="login-btn">
+                    <button class="btn btn-success btn-login" onclick="redirectVars()">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>
+                        Acessar com o SUAP
+                    </button>
                 </li>
+
+                <!-- Botão Adicionar Projeto (quando logado) -->
+                <li class="nav-item d-none" id="actions">
+                    <a class="btn btn-primary btn-add-project" href="../form/form.html">
+                        <i class="bi bi-plus-circle me-1"></i>
+                        Adicionar Projeto
+                    </a>
                 </li>
-                <li id="user-name" class="nav-item d-none"></li>
-                <li class="nav-item d-none">
-                    <img id="user-image" class="profile-img">
-                    <button class="btn btn-outline-danger" onclick="removeToken()">Sair</button>
+
+                <!-- Nome do Usuário (quando logado) -->
+                <li id="user-name" class="nav-item d-none user-info"></li>
+
+                <!-- Imagem e Botão Sair (quando logado) -->
+                <li class="nav-item d-none user-actions">
+                    <img id="user-image" class="profile-img" alt="Foto do usuário">
+                    <button class="btn btn-outline-danger btn-logout" onclick="removeToken()">
+                        <i class="bi bi-box-arrow-right me-1"></i>
+                        Sair
+                    </button>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
+
+
+<script>
+// Efeito de scroll no navbar
+window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+
+// Fecha o menu mobile ao clicar em um link
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        const navbarCollapse = document.querySelector('.navbar-collapse');
+        if (navbarCollapse.classList.contains('show')) {
+            const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+            bsCollapse.hide();
+        }
+    });
+});
+</script>

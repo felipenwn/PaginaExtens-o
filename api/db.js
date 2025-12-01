@@ -32,35 +32,35 @@ db.serialize(() => {
 
   db.run('ALTER TABLE projetos ADD COLUMN galeria TEXT', (err) => {
     if (err && err.message.includes('duplicate column name')) {
-      console.log("A coluna 'galeria' já existe em 'projetos'.");
+ 
     } else if (err) {
-      console.error("Erro ao adicionar 'galeria':", err.message);
+  
     } else {
-      console.log("Coluna 'galeria' adicionada com sucesso.");
+   
     }
   });
   
 
   db.run('ALTER TABLE membros ADD COLUMN email TEXT', (err) => {
     if (err && err.message.includes('duplicate column name')) {
-        console.log("A coluna 'email' já existe em 'membros'.");
+   
     } else if (err) {
-        console.error("Erro ao adicionar 'email':", err.message);
+
     } else {
-        console.log("Coluna 'email' adicionada com sucesso.");
+
     }
   });
 
 
   db.run('ALTER TABLE membros ADD COLUMN responsavel BOOLEAN DEFAULT 0', (err) => {
     if (err && err.message.includes('duplicate column name')) {
-        console.log("A coluna 'responsavel' já existe em 'membros'.");
+
     } else if (err) {
         console.error("Erro ao adicionar 'responsavel':", err.message);
     } else {
-        console.log("Coluna 'responsavel' adicionada com sucesso.");
+   
     }
   });
 
-  console.log("Inicialização do banco de dados concluída.");
+
 });

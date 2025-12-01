@@ -14,37 +14,26 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top bg-white">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="../../assets/img/logo.png" alt="Logo IFsul">
-            </a>
+   
+     <div id="header-placeholder"></div>
+   <script>
+    fetch('../header/header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-placeholder').innerHTML = data;
+            
+            // 1. Inicia o comportamento padrão (scroll, mobile, login)
+            if (typeof iniciarComportamentoHeader === 'function') {
+                iniciarComportamentoHeader();
+            }
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">Início</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#sobre">Sobre</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../extensao/index.html">Projetos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-cadastro" href="https://extensiona.org/" target="_blank">
-                            Cadastre sua demanda
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+            // 2. LINHA NOVA: Remove/Esconde o botão de projetos especificamente nesta página
+            const btnProjetos = document.getElementById('nav-projetos');
+            if (btnProjetos) {
+                btnProjetos.style.display = 'none'; // ou btnProjetos.remove();
+            }
+        });
+</script>
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="container">
@@ -162,19 +151,19 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="stat-item">
-                        <span class="stat-number">50+</span>
+                        <span class="stat-number">9999+</span>
                         <span class="stat-label">Projetos Ativos</span>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="stat-item">
-                        <span class="stat-number">200+</span>
+                        <span class="stat-number">9999+</span>
                         <span class="stat-label">Participantes</span>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="stat-item">
-                        <span class="stat-number">5000+</span>
+                        <span class="stat-number">9999+</span>
                         <span class="stat-label">Pessoas Impactadas</span>
                     </div>
                 </div>
