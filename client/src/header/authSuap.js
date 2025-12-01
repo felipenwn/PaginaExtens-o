@@ -132,7 +132,7 @@ function getUserData() {
 }
 
 function redirectVars() {
-    const correctRedirectUri = ['http://127.0.0.1:3000/PaginaExtens-o/client/src/extensao/index.html'];
+    const correctRedirectUri = window.location.origin + '/client/src/extensao/index.html';
     
     redirectToSuapLogin(
         'https://suap.ifsul.edu.br',

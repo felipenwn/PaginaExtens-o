@@ -26,10 +26,16 @@ const allowedOrigins = [
 ];
 const allowedUserRoles = ["docente", "estagiario" ];
 
-const options = {
-  key: fs.readFileSync('./cert/key.pem'),
-  cert: fs.readFileSync('./cert/cert.pem')
-};
+// const options = {
+//   key: fs.readFileSync('./cert/key.pem'),
+//   cert: fs.readFileSync('./cert/cert.pem')
+// };
+
+// Permite que o frontend (que virá do mesmo domínio via Nginx) acesse a API
+app.use(cors({
+  origin: true, // Aceita requisição da mesma origem automaticamente
+  credentials: true
+}));
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST, // padrão gmail
@@ -521,6 +527,8 @@ app.post('/remove-token', async (req, res) => {
   res.status(204).end();
 });
 
-https.createServer(options, app).listen(PORT, () => {
-  console.log(`HTTPS server running at https://localhost:${PORT}`);
+const REAL_PORT = process.env.PORT || 3000; 
+
+app.listen(REAL_PORT, () => {
+  console.log(`HTTP Server running internally on port ${REAL_PORT}`);
 });

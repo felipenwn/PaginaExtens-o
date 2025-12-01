@@ -1,6 +1,6 @@
 // Configuração centralizada
 const CONFIG = {
-    API_BASE_URL: 'https://localhost:5500',
+    API_BASE_URL: '/api',
     CLIENT_BASE_URL: window.location.origin,
     SUAP_AUTH_HOST: 'https://suap.ifsul.edu.br',
     SUAP_CLIENT_ID: 'aq0Ftd6lhzIulKumRH14a2MrmLBC2hAEFB9GaGPM',
