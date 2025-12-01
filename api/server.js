@@ -32,8 +32,8 @@ const options = {
 };
 
 const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST, // Ex: 'smtp.ifsul.edu.br'
-  port: process.env.EMAIL_PORT || 465,
+  host: process.env.EMAIL_HOST, // padrão gmail
+  port: process.env.EMAIL_PORT || 465, // depende o dominio
   secure: true, // true para 465, false para outras portas
   auth: {
     user: process.env.EMAIL_USER, // 'seu-email@ifsul.edu.br'

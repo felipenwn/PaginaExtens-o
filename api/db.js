@@ -3,7 +3,6 @@ import sqlite3 from "sqlite3";
 export const db = new sqlite3.Database("extensao.db");
 
 db.serialize(() => {
-  // Tabela de projetos (já com a coluna 'galeria')
   db.run(`
     CREATE TABLE IF NOT EXISTS projetos (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -16,7 +15,7 @@ db.serialize(() => {
     )
   `);
 
-  // Tabela de membros (com os novos campos)
+
   db.run(`
     CREATE TABLE IF NOT EXISTS membros (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,9 +29,7 @@ db.serialize(() => {
     )
   `);
 
-  // --- Migrações para o banco de dados existente ---
-  
-  // Adiciona 'galeria' à tabela de projetos (se ainda não existir)
+
   db.run('ALTER TABLE projetos ADD COLUMN galeria TEXT', (err) => {
     if (err && err.message.includes('duplicate column name')) {
       console.log("A coluna 'galeria' já existe em 'projetos'.");
@@ -43,7 +40,7 @@ db.serialize(() => {
     }
   });
   
-  // NOVO: Adiciona 'email' à tabela de membros (se ainda não existir)
+
   db.run('ALTER TABLE membros ADD COLUMN email TEXT', (err) => {
     if (err && err.message.includes('duplicate column name')) {
         console.log("A coluna 'email' já existe em 'membros'.");
@@ -54,7 +51,7 @@ db.serialize(() => {
     }
   });
 
-  // NOVO: Adiciona 'responsavel' à tabela de membros (se ainda não existir)
+
   db.run('ALTER TABLE membros ADD COLUMN responsavel BOOLEAN DEFAULT 0', (err) => {
     if (err && err.message.includes('duplicate column name')) {
         console.log("A coluna 'responsavel' já existe em 'membros'.");
