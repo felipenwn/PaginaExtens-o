@@ -76,63 +76,85 @@ function removeToken() {
     });
 }
 
-function getUserData() {
+async function getUserData() {
+    try {
+        const res = await fetch(`${API_BASE_URL}/meus-dados`, {
+            credentials: 'include'
+        });
 
-    return fetch(`${API_BASE_URL}/meus-dados`, {
-        credentials: 'include'
-    })
-    .then(res => {
-     
-        
-        if (!res.ok) {
-            // Se não for OK, tenta pegar o texto da resposta para ver o erro
-            return res.text().then(text => {
-                console.error('Resposta de erro:', text);
-                throw new Error(`HTTP ${res.status}: ${text}`);
-            });
+    if (!res.ok) {
+            const errorText = await res.text();
+            console.error('❌ Erro na resposta:', res.status, errorText);
+            throw new Error(`HTTP ${res.status}: ${errorText}`);
         }
         
-        return res.json();
-    })
-    .then(data => {
+        const data = await res.json();
+        
         if (!data || data.error) {
-         
-            window.currentUserRole = null; 
+            console.log("Usuário não autenticado ou erro na resposta da API.");
+            window.currentUserRole = null;
             return;
         }
+
+        // ✅ DETECTAR PERFIL CORRETAMENTE
+        const categoria = data.vinculo?.categoria;
+        const tipoVinculo = data.tipo_vinculo;
+
+        // Definir role baseado na categoria retornada pelo SUAP
+        window.currentUserRole = categoria || tipoVinculo || "Desconhecido";
+
+        console.log('👤 Perfil do usuário:', window.currentUserRole);
+        console.log('📋 Tipo de vínculo:', tipoVinculo);
+
+        // ✅ VERIFICAR PERMISSÕES NO SERVIDOR
+        const permissaoRes = await fetch('https://localhost:5500/verificar-permissao', {
+            credentials: 'include'
+        });
         
-       
-        window.currentUserRole = data.vinculo?.categoria || null;
-       
-        
+        const permissao = await permissaoRes.json();
+
+        // Atualizar interface
         const userName = document.getElementById('user-name');
         const userImage = document.getElementById('user-image');
-        
+        const actionsDiv = document.getElementById('actions');
+        const loginBtn = document.getElementById('login-btn');
+
         if (userName && userImage) {
             userName.textContent = data.nome_usual;
             userName.classList.remove('d-none');
             userImage.src = data.url_foto_75x100;
             userImage.parentElement.classList.remove('d-none');
             
-            const actionsBtn = document.getElementById('actions');
-            const loginBtn = document.getElementById('login-btn');
+            // ✅ MOSTRAR BOTÃO "Adicionar Projeto" APENAS SE PERMITIDO
+            if (permissao.permitido) {
+                actionsDiv.classList.remove('d-none');
+            } else {
+                actionsDiv.classList.add('d-none');
+                console.warn('⚠️ Usuário não tem permissão para adicionar projetos:', permissao.mensagem);
+            }
             
-            if (actionsBtn) actionsBtn.classList.remove('d-none');
-            if (loginBtn) loginBtn.classList.add('d-none');
+            loginBtn.classList.add('d-none');
         }
-    })
-    .catch(err => {
+
+        // ✅ BLOQUEAR ACESSO ÀS PÁGINAS DE FORMULÁRIO PARA ALUNOS
+        const paginasRestritas = ['/form/form.html', '/form/form-editar.html'];
+        const paginaAtual = window.location.pathname;
+        
+        if (paginasRestritas.some(pagina => paginaAtual.includes(pagina))) {
+            if (!permissao.permitido) {
+                alert(permissao.mensagem || 'Você não tem permissão para acessar esta página.');
+                window.location.href = '../extensao/index.html';
+            }
+        }
+
+    } catch (err) {
         console.error("Erro ao buscar dados do usuário:", err);
         window.currentUserRole = null;
-        
-        // Mostra botão de login se não estiver autenticado
-        const loginBtn = document.getElementById('login-btn');
-        if (loginBtn) loginBtn.classList.remove('d-none');
-    });
+    }
 }
 
 function redirectVars() {
-    const correctRedirectUri = window.location.origin + '/client/src/extensao/index.html';
+    const correctRedirectUri = ['http://127.0.0.1:3000/PaginaExtens-o/client/src/extensao/index.html'];
     
     redirectToSuapLogin(
         'https://suap.ifsul.edu.br',

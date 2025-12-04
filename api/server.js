@@ -103,6 +103,8 @@ app.use('/uploads', express.static('uploads'));
 
 const checkSuapAuth = async (req, res, next) => {
   const token = req.cookies.SUAP_token;
+  console.log('🔍 Token recebido:', token ? token.substring(0, 20) + '...' : 'NENHUM');
+  
   if (!token) {
     return res.status(401).json({ error: 'Não autenticado' });
   }
@@ -114,40 +116,94 @@ const checkSuapAuth = async (req, res, next) => {
       }
     });
 
+    console.log('✅ Resposta do SUAP:', suapRes.data);
     
-    // Para alunos, vinculo.categoria não existe
-    // Então vamos verificar se é aluno pela presença de vinculo.matricula
-    const isAluno = suapRes.data.vinculo && suapRes.data.vinculo.matricula;
+    // ✅ DETECTAR ALUNO CORRETAMENTE: só é aluno se categoria for vazia/undefined
     const categoria = suapRes.data.vinculo?.categoria;
+    const tipoVinculo = suapRes.data.tipo_vinculo;
     
+    console.log('🔑 Categoria:', categoria);
+    console.log('📋 Tipo de vínculo:', tipoVinculo);
 
-
-    // Se não é aluno e não tem categoria permitida, bloqueia
-    if (!isAluno && !allowedUserRoles.includes(categoria)) {
-
-      return res.status(403).send("Não autorizado.");
+    // ✅ BLOQUEAR ALUNOS EXPLICITAMENTE
+    // Aluno = não tem categoria OU categoria não está na lista permitida
+    if (!categoria || !allowedUserRoles.includes(categoria)) {
+      console.log("❌ ACESSO NÃO AUTORIZADO - Categoria:", categoria);
+      return res.status(403).json({ 
+        error: 'Acesso negado. Apenas professores e estagiários podem gerenciar projetos.' 
+      });
     }
-    // Adiciona a categoria manualmente para alunos
-    if (isAluno && !categoria) {
-      suapRes.data.vinculo.categoria = 'Aluno';
-    }
 
-    // if (!allowedUserRoles.includes(suapRes.data.vinculo.categoria)) {
-    //   console.log("Não autorizado (role).");
-    //   return res.status(403).send("Não autorizado.");
-    // }
+    // Verificar se a categoria está na lista de permitidos
+    if (!allowedUserRoles.includes(categoria)) {
+      console.log("❌ Categoria não autorizada:", categoria);
+      return res.status(403).json({ 
+        error: 'Acesso negado. Perfil sem permissão.' 
+      });
+    }
 
     req.userData = suapRes.data;
     next();
 
-} catch (error) {
+  } catch (error) {
     console.error("❌ Erro na autenticação SUAP:", error.message);
     if (error.response && error.response.status === 401) {
-      return res.status(401).send('Token SUAP inválido ou expirado.');
+      return res.status(401).json({ error: 'Token SUAP inválido ou expirado.' });
     }
-    res.status(500).send('Erro interno ao verificar autenticação.');
+    res.status(500).json({ error: 'Erro interno ao verificar autenticação.' });
   }
 };
+
+// ✅ ADICIONAR ROTA PARA VERIFICAR PERMISSÕES ANTES DO LOGIN
+app.get('/verificar-permissao', async (req, res) => {
+  const token = req.cookies.SUAP_token;
+  
+  if (!token) {
+    return res.status(401).json({ 
+      permitido: false, 
+      error: 'Não autenticado' 
+    });
+  }
+
+  try {
+    const suapRes = await axios.get('https://suap.ifsul.edu.br/api/rh/meus-dados/', {
+      headers: { Authorization: 'Bearer ' + token }
+    });
+
+   const categoria = suapRes.data.vinculo?.categoria;
+
+    // Verifica se é aluno
+    if (!categoria) {
+         return res.json({ 
+        permitido: false, 
+        categoria: 'Aluno',
+        mensagem: 'Alunos não podem gerenciar projetos.'
+      });
+    }
+
+    // Verifica se a categoria está na lista de permitidos (docente, estagiario)
+    if (!allowedUserRoles.includes(categoria)) {
+      return res.json({ 
+        permitido: false, 
+        categoria: categoria,
+        mensagem: 'Seu perfil não tem permissão para gerenciar projetos.'
+      });
+    }
+
+    // Se passou, está permitido
+    res.json({ 
+      permitido: true, 
+      categoria: categoria 
+    });
+
+  } catch (error) {
+    console.error("Erro verificação permissão:", error.message);
+    res.status(500).json({ 
+      permitido: false, 
+      error: 'Erro ao verificar permissões' 
+    });
+  }
+});
 
 // =================================================================
 // --- ROTAS DE PROJETOS ---

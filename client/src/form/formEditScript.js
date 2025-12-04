@@ -235,7 +235,7 @@ async function submitEditarProjetoForm(event) {
     const membrosImagesAntigas = [];
     let temResponsavel = false;
 
-    document.querySelectorAll('.membro-grupo').forEach((membroDiv) => {
+document.querySelectorAll('.membro-grupo').forEach((membroDiv) => {
         const nome = membroDiv.querySelector('.membro-nome').value;
         const email = membroDiv.querySelector('.membro-email').value;
         const titulos = membroDiv.querySelector('.membro-titulos').value;
@@ -247,13 +247,17 @@ async function submitEditarProjetoForm(event) {
             temResponsavel = true;
         }
 
+
+        const imagemParaManter = imageFile ? null : (imageAtual || null);
+
         membrosArray.push({ 
             nome, 
             email,
             titulos,
             responsavel: responsavel ? true : false,
-            imageAtual: imageAtual || null
+            image: imagemParaManter 
         });
+        // ---------------------
         
         if (imageFile) {
             membrosImagesNovas.push(imageFile);
