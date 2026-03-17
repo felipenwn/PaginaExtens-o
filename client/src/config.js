@@ -1,9 +1,11 @@
 // Configuração centralizada
 const CONFIG = {
-    API_BASE_URL: '/api',
+    //BASE_URL: 'http://127.0.0.1:5500',
+    //API_BASE_URL: '/api',
+    API_BASE_URL: 'http://127.0.0.1:3000',
     CLIENT_BASE_URL: window.location.origin,
     SUAP_AUTH_HOST: 'https://suap.ifsul.edu.br',
-    SUAP_CLIENT_ID: 'aq0Ftd6lhzIulKumRH14a2MrmLBC2hAEFB9GaGPM',
+    SUAP_CLIENT_ID: 'WEDz8v92vLr4WAFBFx4Z4rkUBSTgfD3omm4J89NC',
     SUAP_SCOPE: 'identificacao email'
 };
 

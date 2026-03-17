@@ -1,6 +1,6 @@
 import sqlite3 from "sqlite3";
 
-export const db = new sqlite3.Database("extensao.db");
+export const db = new sqlite3.Database("data/extensao.db");
 
 db.serialize(() => {
   db.run(`

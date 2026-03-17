@@ -15,16 +15,21 @@ import 'dotenv/config';
 const app = express();
 
 const PORT = 5500;
-const allowedOrigins = [
-  'https://127.0.0.1:5500',
-  'http://127.0.0.1:5500',
-  '127.0.0.1:5500',
-  'http://127.0.0.1:3001',
-  'https://127.0.0.1:3001',
-  'http://127.0.0.1:3000',
-  'https://127.0.0.1:3000',
-];
-const allowedUserRoles = ["docente", "estagiario" ];
+//const allowedOrigins = [
+//  'https://127.0.0.1:5500',
+//  'http://127.0.0.1:5500',
+//  '127.0.0.1:5500',
+//  'http://127.0.0.1:3001',
+//  'https://127.0.0.1:3001',
+//  'http://127.0.0.1:3000',
+//  'https://127.0.0.1:3000',
+//  'https://extensao.passofundo.ifsul.edu.br'
+//];
+
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
+//console.log(allowedOrigins);
+
+const allowedUserRoles = ["docente", "estagiario", "tecnico_administrativo" ];
 
 // const options = {
 //   key: fs.readFileSync('./cert/key.pem'),

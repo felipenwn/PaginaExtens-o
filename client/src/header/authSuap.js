@@ -1,4 +1,3 @@
-// client/src/header/authSuap.js
 
 window.currentUserRole = null; 
 
@@ -33,7 +32,7 @@ async function saveToken(token) {
     if (token) {
        
         try {
-            const response = await fetch(`${API_BASE_URL}/save-token`, {
+            const response = await fetch(API_BASE_URL + `/save-token`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -59,7 +58,7 @@ async function saveToken(token) {
 
 function removeToken() {
  
-    fetch(`${API_BASE_URL}/remove-token`, {
+    fetch(API_BASE_URL + `/remove-token`, {
         method: 'POST',
         credentials: 'include'
     })
@@ -78,7 +77,7 @@ function removeToken() {
 
 async function getUserData() {
     try {
-        const res = await fetch(`${API_BASE_URL}/meus-dados`, {
+        const res = await fetch(API_BASE_URL + `/meus-dados`, {
             credentials: 'include'
         });
 
@@ -107,7 +106,7 @@ async function getUserData() {
         console.log('📋 Tipo de vínculo:', tipoVinculo);
 
         // ✅ VERIFICAR PERMISSÕES NO SERVIDOR
-        const permissaoRes = await fetch('https://localhost:5500/verificar-permissao', {
+        const permissaoRes = await fetch(CONFIG.API_BASE_URL + '/verificar-permissao', {
             credentials: 'include'
         });
         
@@ -154,18 +153,19 @@ async function getUserData() {
 }
 
 function redirectVars() {
-    const correctRedirectUri = ['http://127.0.0.1:3000/PaginaExtens-o/client/src/extensao/index.html'];
+    //const correctRedirectUri = [API_BASE_URL + '/PaginaExtens-o/client/src/extensao/index.html'];
     
     redirectToSuapLogin(
-        'https://suap.ifsul.edu.br',
-        'aq0Ftd6lhzIulKumRH14a2MrmLBC2hAEFB9GaGPM', 
-        correctRedirectUri, 
-        'identificacao email'
+        CONFIG.SUAP_AUTH_HOST,
+        CONFIG.SUAP_CLIENT_ID, 
+        getRedirectUri(), 
+        CONFIG.SUAP_SCOPE
     );
 }
 
 // Inicialização
 (async () => {
+    console.log("Teste antes do gettoken")
     let token = getTokenFromUrl();
     
     if (token) {
